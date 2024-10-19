@@ -1,0 +1,40 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh; /* Ensure the container covers the full height of the screen */
+    background-color: #111;
+    color: #ffffff;
+}
+  
+.login-box {
+    background-color: #1c1c1c;
+    padding: 2rem;
+    border-radius: 30px;
+    width: 400px;
+    margin: 5rem auto;
+}
+
+.space{
+    margin-top: 10px;
+    width: 385px;
+}
+
+input{
+    background-color: #333;
+    border: 0;
+    height: 30px;
+    margin-top: 8px;
+    color: white;
+    border-radius: 10px;
+}
+
+button{
+    width: 60%;
+    margin-left: 80px;
+    background-color: rgb(22, 88, 110);
+    color: white;
+}
+
+
+

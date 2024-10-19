@@ -1,0 +1,81 @@
+.contact-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    min-height: 100vh;
+    background-color: #111;
+    color: #ffffff; 
+  }
+  
+.contact-box {
+   background-color: #1c1c1c;
+   padding: 2rem;
+   border-radius: 15px;
+   margin: 50px 150px 90px 180px;
+}
+
+.label-style{
+    width: 385px;
+}
+
+.contact_us_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    text-align: center;    
+    margin: 0px 200px;           
+}
+
+.contact_us_page h2{
+    color: red;
+}
+
+.contact_us_page p{
+    margin: 0px;
+}
+
+.main-container {
+    display: flex;   
+    justify-content: space-between; 
+    align-items: flex-start;    
+    padding: 2rem;              
+    gap: 2rem;              
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin: 70px 0px 30px 130px;
+    padding-top: 20px;
+}
+  
+.image-style {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    gap: 1rem;       
+}
+  
+.image-style img {
+    width: 50px;        /* Set an appropriate width for the image */
+    height: auto;
+}
+  
+.contact-info p {
+    margin: 0;          /* Remove default margins if any */
+    text-align: left;
+    white-space: nowrap;   /* Prevents the text from wrapping */
+    overflow: hidden;      /* Hides overflow content */
+    text-overflow: ellipsis;    /* Ensure the text is aligned to the left */
+}
+
+.address-style h3{
+    margin: 0;
+}
+
+  
+  
+
+

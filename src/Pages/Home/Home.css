@@ -1,0 +1,32 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh; /* Ensure the container covers the full height of the screen */
+    background-color: #111;
+    color: #ffffff;
+}
+
+.home-style{
+    margin: 70px 0px 0px 90px;
+    font-size: larger;
+}
+
+.home-style p{
+    font-size: large;
+    font-style: oblique;
+}
+
+.home-style h2{
+    font-size: 50px;
+}
+
+.home-style button{
+    margin: 20px 20px 0px 0px;
+    width: 400px;
+}
+
+.home-style img {
+    height: 15px;
+    width: 15px;
+}
