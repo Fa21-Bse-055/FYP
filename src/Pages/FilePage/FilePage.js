@@ -3,15 +3,44 @@ import "./FilePage.css";
 
 export default function DownloadVerificationFile() {
   // Update with the actual URL where your verification file is located.
-  const verificationFileUrl = 'http://192.168.100.8:3000/api/users/download';
+  const verificationFileUrl = 'http://localhost:3000/api/users/download';
+  // const downloadFile = async () => { 
+  //   try {
+
+  //     const response = await fetch(verificationFileUrl, {
+  //       method: 'GET',
+  //       credentials: 'include', // Include cookies for authentication
+  //       redirect: 'follow', // Automatically follow redirects if the server issues one
+  //     });
+
+  //     console.log(response);
+  //     if (response.ok) {
+  //       // Redirect the browser to the file's URL for download
+  //       window.location.href = verificationFileUrl;
+  //     } else {
+  //       throw new Error('File download failed');
+  //     }
+  //   } catch (error) {
+  //     console.error('Download error:', error.message);
+  //   }
+  // };
   async function downloadFile(){
+  
+
     try{
-      const res = await fetch(verificationFileUrl)
+      const response = await fetch(verificationFileUrl,{credentials:'include'})
+      if(response.ok){
+        window.location.href = verificationFileUrl;
+      }
+      else{
+        alert(`Error: File not found (Status ${response.status})`)
+      }
     }
     catch(error){
-    console.log(error.message);
+      alert(`Error: ${error.message}`);
     }
   }
+
   return (
     <div className="file-page-container">
       <div className="centered-content">

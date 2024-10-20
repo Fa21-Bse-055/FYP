@@ -26,7 +26,7 @@ const TryForFree = () => {
     formData.append("CNICImage", CNICImage);  // `CNICImage` is the file selected by the user
 
     try {
-      const response = await fetch('http://192.168.100.8:3000/api/users/register', {
+      const response = await fetch('http://localhost:3000/api/users/register', {
         method: 'POST',
         body: formData,
         // credentials: 'include',  // To include cookies if needed for CORS requests
