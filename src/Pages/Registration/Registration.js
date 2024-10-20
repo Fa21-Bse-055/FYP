@@ -15,6 +15,10 @@ const TryForFree = () => {
 
   const navigate = useNavigate();
 
+  const handlePage = async () => {
+    navigate('/PersonRegistration')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,7 +48,8 @@ const TryForFree = () => {
   };
 
   return (
-    <div className="login-container">     
+    <div className="login-container">   
+    <button onClick={handlePage}>Person Registration</button>  
       <form className="login-box" onSubmit={handleSubmit}>
         <h1>Registration</h1>
         <div className="space">
