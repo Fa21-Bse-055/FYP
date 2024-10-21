@@ -9,11 +9,12 @@ const Navbar = () => {
       <div className="navbar-container">
         <h2 className="navbar-logo">MyWebsite</h2>
         <ul className="navbar-links">
-          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
-          <li><Link to="/">Registration</Link></li>
+          <li><Link to="/orginizationRegistration">Registration</Link></li>
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link to="/adminPage">Admin</Link></li>
         </ul>
       </div>
     </nav>

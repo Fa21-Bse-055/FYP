@@ -8,6 +8,8 @@ import TryForFree from './Pages/Registration/Registration';
 import Navbar from './Components/Navbar/Navbar';
 import Verification from './Pages/Verification';
 import DownloadVerificationFile from './Pages/FilePage/FilePage';
+import PersonReg from './Pages/PersonRegistration/PersonRegistration';
+import AdminPanel from './Pages/AdminPanel/AdminPanel';
 
 function App() {
   return (
@@ -15,13 +17,15 @@ function App() {
       <div>
         <Navbar /> 
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/verify" element={<Verification />} />
           <Route path="/verificationFile" element={<DownloadVerificationFile />} />
-          <Route path="/" element={<TryForFree />} />
+          <Route path="/PersonRegistration" element={<PersonReg />} />
+          <Route path="/orginizationRegistration" element={<TryForFree />} />
+          <Route path="/adminPage" element={<AdminPanel />} />
         </Routes>
       </div>
     </Router>
