@@ -1,17 +1,15 @@
-/* About.css */
-
 .about-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Pushes Footer to the bottom */
     min-height: 100vh; /* Full viewport height */
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    background-color: black;
+    color: black; /* White text */
     padding: 20px; /* Padding for spacing */
   }
   
   .content {
-    flex: 1; /* Allows content to grow and take available space */
+    flex: 1; 
   }
   
   .about-container h1 {

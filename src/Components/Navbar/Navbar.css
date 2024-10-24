@@ -1,36 +1,127 @@
-/* src/components/Navbar.css */
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif; /* You can choose any font you like */
+  background-color: #f4f4f4; /* Light background for contrast */
+}
+
+/* Navbar Styles */
 .navbar {
-    background-color: #333;
-    padding: 1rem;
-    color: #fff;
-  }
-  
+  background-color: #333; /* Dark background for the navbar */
+  padding: 15px 30px; /* Top/bottom padding, left/right padding */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between; /* Space between logo and links */
+  align-items: center; /* Center items vertically */
+  max-width: 1200px; /* Maximum width for the navbar */
+  margin: auto; /* Center the navbar */
+}
+
+.navbar-logo {
+  color: #ffffff; /* White color for the logo */
+  font-size: 24px; /* Logo size */
+  text-transform: uppercase; /* Uppercase letters */
+  letter-spacing: 1px; /* Slight spacing for readability */
+}
+
+/* Navbar Links Styles */
+.navbar-links {
+  list-style: none; /* Remove bullet points for main navbar links */
+  display: flex; /* Display links in a row */
+  align-items: center; /* Center links vertically */
+}
+
+.navbar-links li {
+  margin-left: 10px; /* Space between main links */
+}
+
+.navbar-links a {
+  color: #ffffff; /* White color for links */
+  text-decoration: none; /* Remove underline */
+  padding: 8px 12px; /* Padding for links */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Hover Effect */
+.navbar-links a:hover {
+  background-color: #575757; /* Slightly lighter background on hover */
+}
+
+/* Dropdown Styles */
+.dropdown-parent {
+  position: relative; /* Positioning for dropdown */
+}
+
+.dropdown {
+  position: absolute; /* Absolute positioning for dropdown */
+  top:25px; /* Align dropdown below the parent */
+  left: 0; /* Align dropdown to the left */
+  background-color: #444; /* Dark background for dropdown */
+  border-radius: 5px; /* Rounded corners for dropdown */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  z-index: 1; /* Ensure dropdown is above other elements */
+  display: none; /* Hide dropdown by default */
+}
+
+.dropdown2 {
+  position: absolute; /* Absolute positioning for dropdown */
+  top:25px; /* Align dropdown below the parent */
+  margin-right: 200px !important;
+  background-color: #444; /* Dark background for dropdown */
+  border-radius: 5px; /* Rounded corners for dropdown */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  z-index: 1; /* Ensure dropdown is above other elements */
+  display: none; /* Hide dropdown by default */
+}
+
+.dropdown-parent:hover .dropdown {
+  display: block; /* Show dropdown on hover */
+}
+
+.dropdown li {
+  list-style: none; /* Remove bullet points for dropdown items */
+  padding: 10px; /* Padding for dropdown items */
+}
+
+.dropdown li a {
+  color: #ffffff; /* White color for dropdown links */
+  display: block; /* Make the entire area clickable */
+}
+
+
+.dropdown2 li {
+  list-style: none; /* Remove bullet points for dropdown items */
+  padding: 10px; /* Padding for dropdown items */
+}
+
+.dropdown2 li a {
+  color: #ffffff; /* White color for dropdown links */
+  display: block; /* Make the entire area clickable */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start; /* Align items to the left */
   }
-  
-  .navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
+
   .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
+    flex-direction: column; /* Stack links vertically */
+    margin-top: 10px; /* Space above links */
   }
-  
-  .navbar-links li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
+
+  .navbar-links li {
+    margin-left: 0; /* Remove left margin for stacked links */
+    margin-bottom: 10px; /* Space between stacked links */
   }
-  
-  .navbar-links li a:hover {
-    color: #ddd;
-  }
-  
+}

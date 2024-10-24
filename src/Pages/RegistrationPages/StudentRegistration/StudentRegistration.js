@@ -1,18 +1,11 @@
 // src/pages/TryForFree.js
 import React, { useState } from 'react';
-import './PersonRegistration.css';
-import Footer from '../../Components/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
+import './StudentRegistration.css';
+import Footer from '../../../Components/Footer/Footer';
 
-const PersonReg = () => {
+const StudentRegistration = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const navigate = useNavigate();
-
-  const handlePage = async () => {
-    navigate('/orginizationRegistration');
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,9 +32,8 @@ const PersonReg = () => {
 
   return (
     <div className="login-container">   
-      <button onClick={handlePage}>Orginization Registration</button>  
       <form className="login-box" onSubmit={handleSubmit}>
-        <h1>Verifier Registration</h1>
+        <h1>Student Registration</h1>
         <div className="space">
           <label htmlFor="email">Email:</label>
           <input 
@@ -80,4 +72,4 @@ const PersonReg = () => {
   );
 };
 
-export default PersonReg;
+export default StudentRegistration;

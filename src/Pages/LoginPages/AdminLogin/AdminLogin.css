@@ -1,0 +1,81 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh; /* Ensure the container covers the full height of the screen */
+    background-color: #111;
+    color: #ffffff;
+  }
+  
+  .login-box {
+    background-color: #1c1c1c;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 5rem auto;
+  }
+  
+  h1 {
+    color: #1e90ff;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group {
+    margin-bottom: 1.5rem;
+    width: 380px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-group input {
+    width: 100%;
+    height: 25px;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #333;
+    color: #ffffff;
+  }
+  
+  /* .otp-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .otp-input {
+    width: 50px;
+    padding: 0.5rem;
+    text-align: center;
+    background-color: #333;
+    border: none;
+    color: #ffffff;
+    border-radius: 5px;
+  } */
+  
+  .login-button {
+    padding: 0.8rem;
+    background-color: rgb(22, 88, 110);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .forgot-password a {
+    color: rgb(22, 88, 110);
+    text-decoration: none;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  

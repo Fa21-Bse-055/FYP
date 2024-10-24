@@ -18,6 +18,16 @@
     width: 385px;
 }
 
+.label-style input {
+    width: 390px !important;
+    height: 40px;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #333; 
+    color: #ffffff; 
+  }
+
 .contact_us_page {
     display: flex;
     flex-direction: column;

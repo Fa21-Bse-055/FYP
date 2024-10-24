@@ -1,23 +1,15 @@
 // src/pages/TryForFree.js
 import React from 'react';
-import './Registration.css';
-import Footer from '../../Components/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
-// import Navbar from '../../Components/Navbar/Navbar';
+import './OrganizationRegistration.css';
+import Footer from '../../../Components/Footer/Footer';
 import { useState } from 'react';
 
-const TryForFree = () => {
+const OrganizationRegistration = () => {
   const [organizationName, setOrganizationName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [organizationWebUrl, setOrganizationWebUrl] = useState('');
   const [CNICImage, setCNICImage] = useState(null);
-
-  const navigate = useNavigate();
-
-  const handlePage = async () => {
-    navigate('/PersonRegistration')
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +30,8 @@ const TryForFree = () => {
 
       const result = await response.json();
       if (response.ok) {
-        navigate(`/verify`);
+        console.log("sucess");
+        
       } else {
         alert(result.message || 'Something went wrong.');
       }
@@ -49,9 +42,8 @@ const TryForFree = () => {
 
   return (
     <div className="login-container">   
-    <button onClick={handlePage}>Person Registration</button>  
       <form className="login-box" onSubmit={handleSubmit}>
-        <h1>Registration</h1>
+        <h1>Organizatin Registration</h1>
         <div className="space">
           <label htmlFor="name">Organization Name:</label>
           <input 
@@ -172,4 +164,4 @@ const TryForFree = () => {
 //    </form>
 // )
 
-export default TryForFree;
+export default OrganizationRegistration;

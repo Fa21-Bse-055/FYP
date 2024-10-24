@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import About from './Pages/About/About';
 import Contact from './Pages/Contact/Contact';
-import Login from './Pages/Login/Login';
-import TryForFree from './Pages/Registration/Registration';
+import OrganizationLogin from './Pages/LoginPages/OrginizationLogin/OrginizationLogin';
+import OrganizationRegistration from './Pages/RegistrationPages/OrganizationRegistration/OrganizationRegistration';
 import Navbar from './Components/Navbar/Navbar';
 import Verification from './Pages/Verification';
 import DownloadVerificationFile from './Pages/FilePage/FilePage';
-import PersonReg from './Pages/PersonRegistration/PersonRegistration';
+import StudentRegistration from './Pages/RegistrationPages/StudentRegistration/StudentRegistration';
 import AdminPanel from './Pages/AdminPanel/AdminPanel';
+import AdiminRegistration from './Pages/RegistrationPages/SuperAdminRegistration/AdminRegistration';
+import AdminLogin from './Pages/LoginPages/AdminLogin/AdminLogin';
 
 function App() {
   return (
@@ -20,12 +22,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/organizationLogin" element={<OrganizationLogin />} />
           <Route path="/verify" element={<Verification />} />
           <Route path="/verificationFile" element={<DownloadVerificationFile />} />
-          <Route path="/PersonRegistration" element={<PersonReg />} />
-          <Route path="/orginizationRegistration" element={<TryForFree />} />
+          <Route path="/studentRegistration" element={<StudentRegistration />} />
+          <Route path="/organizationRegistration" element={<OrganizationRegistration />} />
           <Route path="/adminPage" element={<AdminPanel />} />
+          <Route path="/adminRegistration" element={<AdiminRegistration />} />
+          <Route path="/adminLogin" element={<AdminLogin />} />
         </Routes>
       </div>
     </Router>
