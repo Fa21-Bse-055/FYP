@@ -31,10 +31,25 @@ const StudentRegistration = () => {
   };
 
   return (
-    <div className="login-container">   
-      <form className="login-box" onSubmit={handleSubmit}>
+    <div>
+    <div className="login-container2">   
+            <div className="left-section2">
+                <h1>Welcome to the Student Registration</h1>
+                <p>
+                    Create your student account here, it will take less then 2 min...
+                </p>
+                <div className="quote2 img">
+                    <img
+                        src="st reg.jpeg"
+                        alt="Admin Features"
+                    />
+                </div>
+            </div>
+
+<div className='right-section2'>
+      <form className="login-box2" onSubmit={handleSubmit}>
         <h1>Student Registration</h1>
-        <div className="space">
+        <div className="space2">
           <label htmlFor="email">Email:</label>
           <input 
             type="email" 
@@ -46,7 +61,7 @@ const StudentRegistration = () => {
             required 
           />
         </div>
-        <div className="space">
+        <div className="space2">
           <label htmlFor="password">Password:</label>
           <input 
             type="password" 
@@ -58,16 +73,19 @@ const StudentRegistration = () => {
             required 
           /> 
         </div>
-        <div  className="login-cont">
-            <button>
-                  <img src='google2.png' alt='google'></img>
-            </button>   
-        </div>
         <div>
           <button type="submit">Submit</button>
         </div>
+        <div className='p-st'>
+          <p>Or Login with</p>
+        </div>
+        <div  className="login-cont2">
+             <img src='google2.png' alt='google'></img>
+        </div>
       </form>
-      <Footer />
+      </div>     
+    </div>
+    <Footer />
     </div>
   );
 };

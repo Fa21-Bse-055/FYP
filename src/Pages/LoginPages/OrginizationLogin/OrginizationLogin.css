@@ -41,23 +41,6 @@ h1 {
   color: #ffffff !important; 
 }
 
-
-/* .otp-group {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.otp-input {
-  width: 50px;
-  padding: 0.5rem;
-  text-align: center;
-  background-color: #333;
-  border: none;
-  color: #ffffff;
-  border-radius: 5px;
-} */
-
 .login-button {
   padding: 0.8rem;
   background-color: rgb(22, 88, 110);
@@ -65,18 +48,4 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.forgot-password {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.forgot-password a {
-  color: rgb(22, 88, 110);
-  text-decoration: none;
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
 }

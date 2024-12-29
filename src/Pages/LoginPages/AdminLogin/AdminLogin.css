@@ -12,6 +12,7 @@
     padding: 2rem;
     border-radius: 10px;
     margin: 5rem auto;
+    width: 420px !important;
   }
   
   h1 {
@@ -39,23 +40,7 @@
     background-color: #333;
     color: #ffffff;
   }
-  
-  /* .otp-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-  
-  .otp-input {
-    width: 50px;
-    padding: 0.5rem;
-    text-align: center;
-    background-color: #333;
-    border: none;
-    color: #ffffff;
-    border-radius: 5px;
-  } */
-  
+
   .login-button {
     padding: 0.8rem;
     background-color: rgb(22, 88, 110);

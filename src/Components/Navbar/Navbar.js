@@ -1,93 +1,74 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'; // Optional: For styling
-
-// const Navbar = () => {
-
-  // const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  // const handleMouseEnter = () => {
-  //   setDropdownOpen(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setDropdownOpen(false);
-  // };
-//   return (
-//     <nav className="navbar">
-//       <div className="navbar-container">
-//         <h2 className="navbar-logo">MyWebsite</h2>
-//         <ul className="navbar-links">
-//           <li><Link to="/">Home</Link></li>
-//           <li><Link to="/about">About</Link></li>
-//           <li><Link to="/orginizationRegistration">Registration</Link></li>
-{/* <li
-          className="dropdown-parent"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <a href="#">Registration</a>
-          {dropdownOpen && (
-            <ul className="dropdown">
-              <li><a href="/admin-registration">Admin Registration</a></li>
-              <li><a href="/org-registration">Organization Registration</a></li>
-              <li><a href="/user-registration">User Registration</a></li>
-            </ul>
-          )} */}
-//           <li><Link to="/login">Login</Link></li>
-//           <li><Link to="/contact">Contact Us</Link></li>
-//           <li><Link to="/adminPage">Admin</Link></li>
-//           <li><Link to="/adminRegistration">Admin Registration</Link></li>
-//           <li><Link to="/adminLogin">Admin Login</Link></li>
-//         </ul>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
+import './Navbar.css';
 
 const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpenLogin, setDropdownOpenLogin] = useState(false);
+  const [dropdownOpenRegistration, setDropdownOpenRegistration] = useState(false);
 
-  const handleMouseEnter = () => {
-    setDropdownOpen(true);
+  const loginDropdownRef = useRef(null);
+  const registrationDropdownRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (
+      loginDropdownRef.current &&
+      !loginDropdownRef.current.contains(event.target)
+    ) {
+      setDropdownOpenLogin(false);
+    }
+
+    if (
+      registrationDropdownRef.current &&
+      !registrationDropdownRef.current.contains(event.target)
+    ) {
+      setDropdownOpenRegistration(false);
+    }
   };
 
-  const handleMouseLeave = () => {
-    setDropdownOpen(false);
-  };
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <h2 className="navbar-logo">MyWebsite</h2>
+      <div className="nav-logo">
+        <img src="CompLogo.png" alt="Company Logo" />
+      </div>
+        <h2 className="navbar-logo">
+          <Link to="/" className="logo-link">BlockSecure</Link>
+        </h2>
         <ul className="navbar-links">
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>        
+          <li><Link to="/about">About</Link></li>
           <li><Link to="/adminPage">Admin</Link></li>
 
+          {/* Login Dropdown */}
           <li
             className="dropdown-parent"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            ref={loginDropdownRef}
+            onClick={() => setDropdownOpenLogin(!dropdownOpenLogin)}
           >
             <a href="#">Login</a>
-            {dropdownOpen && (
+            {dropdownOpenLogin && (
               <ul className="dropdown">
                 <li><Link to="/organizationLogin">Organization Login</Link></li>
                 <li><Link to="/adminLogin">Admin Login</Link></li>
               </ul>
-            )}</li>
+            )}
+          </li>
 
+          {/* Registration Dropdown */}
           <li
             className="dropdown-parent"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            ref={registrationDropdownRef}
+            onClick={() => setDropdownOpenRegistration(!dropdownOpenRegistration)}
           >
             <a href="#">Registration</a>
-            {dropdownOpen && (
+            {dropdownOpenRegistration && (
               <ul className="dropdown">
                 <li><Link to="/organizationRegistration">Organization Registration</Link></li>
                 <li><Link to="/studentRegistration">Student Registration</Link></li>
@@ -95,7 +76,8 @@ const Navbar = () => {
               </ul>
             )}
           </li>
-
+          <li><a href="/generateDocument">Generate Document</a></li>
+          <li><a href="/uploadDocument">Upload Document</a></li>
           <li><Link to="/contact">Contact Us</Link></li>
         </ul>
       </div>
@@ -104,4 +86,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

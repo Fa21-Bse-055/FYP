@@ -1,4 +1,4 @@
-/* Basic Reset */
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,122 +6,206 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif; /* You can choose any font you like */
-  background-color: #f4f4f4; /* Light background for contrast */
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212; /* Dark theme background */
+  color: #ffffff;
 }
 
-/* Navbar Styles */
+/* Navbar Styling */
 .navbar {
-  background-color: #333; /* Dark background for the navbar */
-  padding: 15px 30px; /* Top/bottom padding, left/right padding */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  background: linear-gradient(90deg, #0f2027, #203a43, #2c5364); /* Blockchain-inspired gradient */
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
 }
 
 .navbar-container {
+  max-width: 1200px;
+  margin: auto;
   display: flex;
-  justify-content: space-between; /* Space between logo and links */
-  align-items: center; /* Center items vertically */
-  max-width: 1200px; /* Maximum width for the navbar */
-  margin: auto; /* Center the navbar */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-logo {
-  color: #ffffff; /* White color for the logo */
-  font-size: 24px; /* Logo size */
-  text-transform: uppercase; /* Uppercase letters */
-  letter-spacing: 1px; /* Slight spacing for readability */
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
 
-/* Navbar Links Styles */
+.nav-logo img {
+  margin-right: 15px;
+  margin-left: -20px;
+  width: 60px;
+  height: 60px; /* Adjust as per logo size */
+  filter: drop-shadow(0 0 1px #00d4ff);
+}
+
+.logo-link {
+  color: #00d4ff; /* Neon blue */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.logo-link:hover {
+  color: #14ffe9; /* Lighter neon on hover */
+}
+
+/* Navbar Links */
 .navbar-links {
-  list-style: none; /* Remove bullet points for main navbar links */
-  display: flex; /* Display links in a row */
-  align-items: center; /* Center links vertically */
+  display: flex;
+  list-style: none;
+  margin-left: 20px;
 }
 
 .navbar-links li {
-  margin-left: 10px; /* Space between main links */
+  margin-left: 20px;
+  position: relative;
 }
 
 .navbar-links a {
-  color: #ffffff; /* White color for links */
-  text-decoration: none; /* Remove underline */
-  padding: 8px 12px; /* Padding for links */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  border-radius: 5px; /* Rounded corners */
+  color: #ffffff;
+  text-decoration: none;
+  padding: 4px 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
 }
 
-/* Hover Effect */
 .navbar-links a:hover {
-  background-color: #575757; /* Slightly lighter background on hover */
+  background: #00d4ff;
+  color: #0f3460;
+  box-shadow: 0px 0px 10px #00d4ff, 0px 0px 20px #14ffe9; /* Glow effect */
 }
 
-/* Dropdown Styles */
+/* Dropdown Menu */
 .dropdown-parent {
-  position: relative; /* Positioning for dropdown */
+  position: relative;
 }
 
 .dropdown {
-  position: absolute; /* Absolute positioning for dropdown */
-  top:25px; /* Align dropdown below the parent */
-  left: 0; /* Align dropdown to the left */
-  background-color: #444; /* Dark background for dropdown */
-  border-radius: 5px; /* Rounded corners for dropdown */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  z-index: 1; /* Ensure dropdown is above other elements */
-  display: none; /* Hide dropdown by default */
+  position: absolute;
+  width: 150px;
+  top: 55px;
+  left: 0;
+  background: #095564;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.dropdown2 {
-  position: absolute; /* Absolute positioning for dropdown */
-  top:25px; /* Align dropdown below the parent */
-  margin-right: 200px !important;
-  background-color: #444; /* Dark background for dropdown */
-  border-radius: 5px; /* Rounded corners for dropdown */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  z-index: 1; /* Ensure dropdown is above other elements */
-  display: none; /* Hide dropdown by default */
-}
-
-.dropdown-parent:hover .dropdown {
-  display: block; /* Show dropdown on hover */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdown li {
-  list-style: none; /* Remove bullet points for dropdown items */
-  padding: 10px; /* Padding for dropdown items */
+  list-style: none;
+  padding: 5px 10px;
 }
 
 .dropdown li a {
-  color: #ffffff; /* White color for dropdown links */
-  display: block; /* Make the entire area clickable */
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  font-size: 0.9rem;
+  margin-right: 15px;
+  transition: all 0.3s ease;
 }
 
-
-.dropdown2 li {
-  list-style: none; /* Remove bullet points for dropdown items */
-  padding: 10px; /* Padding for dropdown items */
-}
-
-.dropdown2 li a {
-  color: #ffffff; /* White color for dropdown links */
-  display: block; /* Make the entire area clickable */
+.dropdown li a:hover {
+  background: #00d4ff;
+  color: #16213e;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding: 0 15px;
+  }
+
+  .navbar-logo {
+    font-size: 1.5rem; /* Adjust logo size */
+  }
+
+  .nav-logo img {
+    margin-left: -100px;
+    width: 50px; /* Reduce logo size */
+    height: 50px;
+  }
+
+  .navbar-links li {
+    margin-left: 15px; /* Adjust spacing for links */
+  }
+
+  .navbar-links a {
+    font-size: 0.9rem; /* Reduce link font size */
+    padding: 6px 10px;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-    align-items: flex-start; /* Align items to the left */
+    flex-direction: column; /* Stack navbar items vertically */
+    align-items: flex-start;
+    padding: 15px;
   }
 
   .navbar-links {
     flex-direction: column; /* Stack links vertically */
-    margin-top: 10px; /* Space above links */
+    width: 100%; /* Full width for links */
+    margin-top: 10px;
   }
 
   .navbar-links li {
-    margin-left: 0; /* Remove left margin for stacked links */
-    margin-bottom: 10px; /* Space between stacked links */
+    margin: 10px 0; /* Add spacing between links */
+  }
+
+  .navbar-links a {
+    width: 100%; /* Full width for links */
+    text-align: left; /* Align text to the left */
+  }
+
+  .dropdown {
+    position: relative; /* Place dropdown relative to parent */
+    top: auto;
+    left: auto;
+    width: 100%; /* Full width dropdown */
+  }
+
+  .dropdown li {
+    padding: 8px 15px; /* Adjust padding for smaller dropdown items */
   }
 }
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 1.2rem; /* Smaller logo font size */
+  }
+
+  .nav-logo img {
+    width: 40px; /* Further reduce logo size */
+    height: 40px;
+    margin-left: -50px; /* Adjust logo alignment */
+  }
+
+  .navbar-links a {
+    font-size: 0.8rem; /* Reduce link font size further */
+    padding: 5px 8px; /* Adjust padding */
+  }
+
+  .dropdown li {
+    font-size: 0.8rem; /* Smaller dropdown font size */
+  }
+}
+

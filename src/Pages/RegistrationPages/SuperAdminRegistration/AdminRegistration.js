@@ -39,52 +39,71 @@ const AdminRegistration = () => {
   };
 
   return (
-    <div className="login-container">   
-      <form className="login-box" onSubmit={handleSubmit}>
-        <h1>Admin Registration</h1>
-        <div className="space">
-          <label htmlFor="name">UserName:</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            placeholder="Enter User Name..." 
-            value={userName} 
-            onChange={(e) => setUserName(e.target.value)} 
-            required 
-          />
+    <div>
+        <div className="login-container1">
+            {/* Left Section */}
+            <div className="left-section1">
+                <h1>Welcome to the Admin Registration</h1>
+                <p>
+                    Create your admin account to manage and verify organizations efficiently.
+                </p>
+                <div className="quote1 img">
+                    <img
+                        src="admin login.png"
+                        alt="Admin Features"
+                    />
+                </div>
+            </div>
+            
+            {/* Right Section */}
+            <div className="right-section1">
+                <form className="login-box1" onSubmit={handleSubmit}>
+                    <h1>Admin Registration</h1>
+                    <div className="space1">
+                        <label htmlFor="name">User Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter User Name..."
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="space1">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="space1">
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your Password..."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div className="space">
-          <label htmlFor="email">Email:</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            placeholder="Enter your email..." 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div className="space">
-          <label htmlFor="password">Password:</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="password" 
-            placeholder="Enter your Password..." 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>    
-        <div>      
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-      <Footer />
+        <Footer />
     </div>
-  );
+);
 };
 
 export default AdminRegistration;

@@ -4,6 +4,7 @@ import './OrginizationLogin.css';
 
 function OrganizationLogin() {
   return (
+    <div>
     <div className="login-container">
       <div className="login-box">
         <h1>Orginization Login</h1>
@@ -18,9 +19,7 @@ function OrganizationLogin() {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
-        <p className="forgot-password">
-          Forgot your password? <a href="#">Click here.</a>
-        </p>
+      </div>
       </div>
       <Footer/>
     </div>

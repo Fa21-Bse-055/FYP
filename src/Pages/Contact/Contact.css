@@ -1,91 +1,200 @@
 .contact-container {
     display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
-    min-height: 100vh;
-    background-color: #111;
-    color: #ffffff; 
-  }
-  
-.contact-box {
-   background-color: #1c1c1c;
-   padding: 2rem;
-   border-radius: 15px;
-   margin: 50px 150px 90px 180px;
-}
-
-.label-style{
-    width: 385px;
-}
-
-.label-style input {
-    width: 390px !important;
-    height: 40px;
-    padding: 0.8rem;
-    border-radius: 10px;
-    border: none;
-    background-color: #333; 
-    color: #ffffff; 
+    flex-direction: column;
+    background-color: #ffffff;
+    color: #111;
+    padding: 2rem;
   }
 
-.contact_us_page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;   
-    text-align: center;    
-    margin: 0px 200px;           
-}
-
-.contact_us_page h2{
-    color: red;
-}
-
-.contact_us_page p{
-    margin: 0px;
-}
-
-.main-container {
-    display: flex;   
-    justify-content: space-between; 
-    align-items: flex-start;    
-    padding: 2rem;              
-    gap: 2rem;              
-}
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    margin: 70px 0px 30px 130px;
-    padding-top: 20px;
-}
-  
-.image-style {
-    padding-top: 50px;
+.page-par{
     display: flex;
     flex-direction: row;
-    align-items: center; 
-    gap: 1rem;       
+    background-color: #ffffff;
 }
   
-.image-style img {
-    width: 50px;        /* Set an appropriate width for the image */
-    height: auto;
+.contact-img img {
+ width: 550px;
+ height: 550px;
+ margin-top: -40px;
+ margin-left: 120px;
 }
   
-.contact-info p {
-    margin: 0;          /* Remove default margins if any */
-    text-align: left;
-    white-space: nowrap;   /* Prevents the text from wrapping */
-    overflow: hidden;      /* Hides overflow content */
-    text-overflow: ellipsis;    /* Ensure the text is aligned to the left */
-}
-
-.address-style h3{
+  .contact-info {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 0;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border: 2px solid grey;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .info-item img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .info-item h3 {
     margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 1000px;
+  }
+  
+  .image-section {
+    flex: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 300px;
+  }
+  
+  .contact-box {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+    margin-right: 170px;
+    margin-left: 130px;
+    width: 400px !important;
+  }
+  
+  .label-style {
+    margin-bottom: 1rem;
+  }
+  
+  .label-style input,
+  .label-style textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #111;
+  }
+  
+  .contact-box button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 70px;
+    margin-right: 70px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  /* Responsive Design */
+@media (max-width: 1024px) {
+  .page-par {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align items */
+  }
+
+  .contact-img img {
+    width: 100%; /* Make the image responsive */
+    max-width: 500px; /* Limit maximum width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the image */
+  }
+
+  .contact-info {
+    flex-direction: column; /* Stack info items vertically */
+    align-items: center; /* Center align items */
+    padding: 1.5rem; /* Adjust padding */
+  }
+
+  .content-wrapper {
+    flex-direction: column; /* Stack sections vertically */
+    align-items: center;
+    width: 100%; /* Full width */
+    padding: 1rem; /* Add padding */
+  }
+
+  .contact-box {
+    margin: 1rem auto; /* Center the box */
+    width: 90%; /* Make it responsive */
+    max-width: 600px; /* Restrict the width */
+  }
+
+  .contact-box button {
+    margin-left: 0; /* Reset margin for centering */
+    margin-right: 0;
+  }
 }
 
-  
-  
+@media (max-width: 768px) {
+  .contact-info {
+    padding: 1rem; /* Reduce padding */
+  }
 
+  .info-item h3 {
+    font-size: 1rem; /* Adjust font size */
+  }
 
+  .contact-box {
+    padding: 1.5rem; /* Adjust padding */
+    width: 95%; /* Full width with margin */
+  }
+
+  .contact-box button {
+    padding: 0.7rem 1.5rem; /* Adjust button size */
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 1rem; /* Reduce container padding */
+  }
+
+  .contact-img img {
+    max-width: 100%; /* Full width for smaller screens */
+    margin: 0 auto; /* Center the image */
+  }
+
+  .contact-info {
+    padding: 0.5rem; /* Minimal padding */
+  }
+
+  .info-item {
+    flex-direction: column; /* Stack text and image */
+    gap: 0.5rem; /* Reduce gap */
+  }
+
+  .info-item img {
+    width: 30px; /* Smaller icons */
+    height: 30px;
+  }
+
+  .info-item h3 {
+    font-size: 0.9rem; /* Adjust font size */
+  }
+
+  .contact-box {
+    padding: 1rem; /* Reduce padding */
+  }
+
+  .contact-box button {
+    padding: 0.6rem 1rem; /* Smaller buttons */
+    font-size: 0.8rem; /* Adjust font size */
+  }
+}

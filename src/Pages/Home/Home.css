@@ -2,31 +2,82 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100vh; /* Ensure the container covers the full height of the screen */
-    background-color: #111;
+    min-height: 100vh;
     color: #ffffff;
-}
-
-.home-style{
-    margin: 70px 0px 0px 90px;
+    position: relative; /* Allow positioning child elements */
+  }
+  
+  .background {
+    position: absolute; /* Set the background layer */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1; /* Behind the content */
+  }
+  
+  .background img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+  }
+  
+  .background img:not(:nth-child(1)) {
+    opacity: 0; /* Hide non-active images */
+  }
+  
+  .home-style {
+    /* color: #00d4ff; */
+    position: relative; /* Ensures this content is above the background */
+    z-index: 2; /* Above the background */
+    margin: 70px 0px 100px 90px; /* Original margin values */
     font-size: larger;
-}
 
-.home-style p{
+  }
+  
+  .home-style p {
     font-size: large;
     font-style: oblique;
-}
-
-.home-style h2{
-    font-size: 50px;
-}
-
-.home-style button{
-    margin: 20px 20px 0px 0px;
-    width: 400px;
-}
-
-.home-style img {
+    margin: 10px 0; /* Add spacing around paragraphs */
+  }
+  
+  .home-style h2 {
+    font-size: 50px; /* Large heading size */
+    margin: 20px 0; /* Spacing between heading and other content */
+  }
+  
+  .home-style button {
+    margin-top: 20px;
+    width: 400px; /* Original button width */
+    padding: 10px 15px; /* Add padding for a better feel */
+    background-color: #111; /* Black background for contrast */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Larger font for better readability */
+  }
+  
+  .home-style button img {
     height: 15px;
     width: 15px;
+    margin-left: 10px; /* Add space between text and icon */
+  }
+
+  .home-style input[type="file"] {
+    display: none; /* Hide the file input by default */
+  }
+
+  footer {
+  position: relative; /* Ensures footer is not affected by background */
+  z-index: 2; /* Above the background */
+  padding: 10px;
+  text-align: center;
+  background-color: #111; /* Optional background for better contrast */
+  color: #fff;
 }

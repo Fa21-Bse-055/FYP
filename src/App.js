@@ -12,6 +12,8 @@ import StudentRegistration from './Pages/RegistrationPages/StudentRegistration/S
 import AdminPanel from './Pages/AdminPanel/AdminPanel';
 import AdiminRegistration from './Pages/RegistrationPages/SuperAdminRegistration/AdminRegistration';
 import AdminLogin from './Pages/LoginPages/AdminLogin/AdminLogin';
+import GenerateDocument from './Pages/Generate-Document/GenerateDocument';
+import UploadDocument from './Pages/Upload-Document/UploadDocument';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/adminPage" element={<AdminPanel />} />
           <Route path="/adminRegistration" element={<AdiminRegistration />} />
           <Route path="/adminLogin" element={<AdminLogin />} />
+          <Route path="/generateDocument" element={<GenerateDocument />} />
+          <Route path="/uploadDocument" element={<UploadDocument />} />
         </Routes>
       </div>
     </Router>

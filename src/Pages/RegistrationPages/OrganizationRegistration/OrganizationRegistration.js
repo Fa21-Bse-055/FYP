@@ -41,73 +41,93 @@ const OrganizationRegistration = () => {
   };
 
   return (
-    <div className="login-container">   
-      <form className="login-box" onSubmit={handleSubmit}>
-        <h1>Organizatin Registration</h1>
-        <div className="space">
-          <label htmlFor="name">Organization Name:</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            placeholder="Enter Organization name..." 
-            value={organizationName} 
-            onChange={(e) => setOrganizationName(e.target.value)} 
-            required 
-          />
+    <div>
+    <div className="login-container">
+    <div className="left-section">
+        <h1>Welcome to Organization Registration</h1>
+        <p>
+            Our registration process is quick and easy, taking no more than 10 minutes to complete.
+        </p>
+        <div className="quote img">
+                <img
+                    src="org1.jpeg"
+                    alt="User testimonial"
+              />
         </div>
-        <div className="space">
-          <label htmlFor="email">Email:</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            placeholder="Enter your email..." 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div className="space">
-          <label htmlFor="password">Password:</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="password" 
-            placeholder="Enter your Password..." 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <div className="space">
-          <label htmlFor="domain">Domain Name:</label>
-          <input 
-            type="text" 
-            id="domain" 
-            name="domain" 
-            placeholder="Enter Domain name..." 
-            value={organizationWebUrl} 
-            onChange={(e) => setOrganizationWebUrl(e.target.value)} 
-            required 
-          />
-        </div>   
-        <div className="space">
-          <label htmlFor="CNICImage">Image:</label>
-          <input 
-            type="file" 
-            id="image" 
-            name="image" 
-            onChange={(e) => setCNICImage(e.target.files[0])}  // Getting the selected file
-            required 
-          />
-        </div>  
-        <div>      
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-      <Footer />
     </div>
+    <div className="right-section">
+        <form className="login-box" onSubmit={handleSubmit}>
+            <h1>Organization Registration</h1>
+            <div className="space">
+                <label htmlFor="name">Organization Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter Organization name..."
+                    value={organizationName}
+                    onChange={(e) => setOrganizationName(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="space">
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="space">
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your Password..."
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="space">
+                <label htmlFor="domain">Domain Name:</label>
+                <input
+                    type="text"
+                    id="domain"
+                    name="domain"
+                    placeholder="Enter Domain name..."
+                    value={organizationWebUrl}
+                    onChange={(e) => setOrganizationWebUrl(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="space">
+                <label htmlFor="CNICImage">Image:</label>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    onChange={(e) => setCNICImage(e.target.files[0])}
+                    required
+                />
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+            {/* <div>
+            Already have an account? <a href="/login">Login</a>
+            </div> */}
+        </form>
+    </div>  
+</div>
+ <Footer/>
+</div>
+
   );
 };
 

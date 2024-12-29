@@ -37,6 +37,7 @@ function AdminLogin() {
     };
 
     return (
+        <div>
         <div className="login-container">
             <div className="login-box">
                 <h1>Admin Login</h1>
@@ -65,9 +66,7 @@ function AdminLogin() {
                 </form>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 {successMessage && <p className="success-message">{successMessage}</p>}
-                <p className="forgot-password">
-                    Forgot your password? <a href="#">Click here.</a>
-                </p>
+            </div>
             </div>
             <Footer />
         </div>

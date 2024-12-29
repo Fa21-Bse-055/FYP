@@ -1,26 +1,72 @@
-.login-container {
+.login-container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #ffffff;
+    margin-top: -40px;
+}
+
+.left-section2 {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 100vh; /* Ensure the container covers the full height of the screen */
-    background-color: #111;
-    color: #ffffff;
+    justify-content: center;
+    padding: 3rem;
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 200px !important;
+    width: 100px !important;
+    height: 475px !important;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.left-section2 h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #f9fafb;
+}
+
+.left-section2 p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: #d1d5db;
+}
+
+.quote2 img {
+    width: 300px;
+    height: 300px;
+    margin-right: 5px;
+    margin-left: 40px !important;
+    vertical-align: middle;
+}
+.right-section2 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
 }
   
-.login-box {
-    background-color: #1c1c1c;
+.login-box2 {
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
     padding: 2rem;
     border-radius: 30px;
-    width: 400px;
+    width: 450px;
     margin: 5rem auto;
 }
 
-.space{
+.space2{
     margin-top: 10px;
     width: 385px;
 }
 
-input{
+.login-box2 input{
     background-color: #333;
     border: 0;
     height: 30px;
@@ -29,16 +75,22 @@ input{
     border-radius: 10px;
 }
 
-button{
+.login-box2 button{
     width: 60%;
     margin-left: 80px;
     background-color: rgb(22, 88, 110);
     color: white;
 }
 
-.login-cont img{
-    height: 50px;
-    width: 220px;
+.login-cont2 img{
+    height: 55px;
+    width: 233px;
+    margin-left: 80px;
+}
+
+.p-st {
+    color: black;
+    margin-left: 140px;
 }
 
 
