@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../../Components/context/AuthContext';
 import Footer from '../../../Components/Footer/Footer';
 import AuthNavigation from '../../../Components/AuthNavigation/AuthNavigation';
 import './AdminLogin.css';
-import { Navigate } from 'react-router-dom';
 
 function AdminLogin() {
     const [email, setEmail] = useState(''); 
-    const [password, setPassword] = useState('');  
-    const [loginSucess, setLoginSucess] = useState(false);
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const { login, isAuthenticated, hasRole } = useAuth();
 
     // Add animation for particles
     useEffect(() => {
@@ -21,45 +24,40 @@ function AdminLogin() {
         });
 
         const container = document.querySelector('.login-container');
-        particles.forEach(particle => container.appendChild(particle));
+        if (container) {
+            particles.forEach(particle => container.appendChild(particle));
 
-        return () => {
-            particles.forEach(particle => {
-                if (particle.parentNode === container) {
-                    container.removeChild(particle);
-                }
-            });
-        };
+            return () => {
+                particles.forEach(particle => {
+                    if (particle.parentNode === container) {
+                        container.removeChild(particle);
+                    }
+                });
+            };
+        }
     }, []);
 
     const handleLogin = async (e) => {
-        e.preventDefault();  // Prevent form from reloading the page
+        e.preventDefault();
+        setError('');
+        setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:3000/api/admin/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-
-            if (response.status === 200) {
-                console.log("sucess :"+data);
-                setLoginSucess(true);
-             
-            } else {
-                console.log("error :"+data);
+            const result = await login(email, password, 'admin');
+            
+            if (!result.success) {
+                setError(result.error || 'Login failed. Please check your credentials.');
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("Login error:", error);
+            setError('Connection error. Please check if the server is running.');
+        } finally {
+            setLoading(false);
         }
     };
 
-    if(loginSucess){
+    // Redirect if already authenticated as admin or super-admin
+    if (isAuthenticated() && hasRole(['admin', 'super-admin'])) {
         return <Navigate to="/adminPage" />;
     }
 
@@ -69,6 +67,7 @@ function AdminLogin() {
                 <AuthNavigation />
                 <div className="login-box">
                     <h1>Admin Login</h1>
+                    {error && <div className="error-message">{error}</div>}
                     <form onSubmit={handleLogin}>
                         <div className="input-group">
                             <label>Email address</label>
@@ -78,6 +77,7 @@ function AdminLogin() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                disabled={loading}
                             />
                         </div>
                         <div className="input-group">
@@ -88,10 +88,15 @@ function AdminLogin() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                disabled={loading}
                             />
                         </div>
-                        <button type="submit" className="login-button">
-                            <span>Login</span>
+                        <button 
+                            type="submit" 
+                            className="login-button"
+                            disabled={loading}
+                        >
+                            <span>{loading ? 'Logging in...' : 'Login'}</span>
                         </button>
                     </form>
                 </div>

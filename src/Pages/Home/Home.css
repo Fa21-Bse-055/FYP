@@ -126,6 +126,7 @@
 .gradient-text {
   background: linear-gradient(45deg, #4ecdc4, #00d4ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
 }
@@ -156,7 +157,7 @@
 .primary-button,
 .secondary-button {
   padding: 1rem 2rem;
-  min-width: 220px;
+  min-width: 300px;
   height: 50px;
   text-align: center;
   border-radius: 5px;
@@ -168,7 +169,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 220px;
+  width: 300px;
 }
 
 .primary-button {
@@ -292,16 +293,19 @@ html {
   position: relative;
   z-index: 1;
   scroll-margin-top: 2rem;
+  width: 100%;
 }
 
 .verification-container {
-  max-width: 800px;
+  max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
+  background-color: transparent;
 }
 
 .verification-card {
   background: rgba(15, 15, 15, 0.6);
-  border: 1px solid rgba(78, 205, 196, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 2rem;
   backdrop-filter: blur(10px);
@@ -309,6 +313,7 @@ html {
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .verification-card::before {
@@ -339,11 +344,12 @@ html {
   }
 }
 
-/* File Upload */
 .file-upload {
   position: relative;
   transition: all 0.3s ease;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
 }
 
 .file-upload input[type="file"] {
@@ -354,17 +360,21 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: rgba(78, 205, 196, 0.1);
-  border: 1px dashed rgba(78, 205, 196, 0.5);
+  gap: 0.8rem;
+  padding: 1.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-  color: #4ecdc4;
+  color: #ffffff;
   font-weight: 500;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .file-upload-label:hover {
@@ -384,21 +394,55 @@ html {
   font-size: 0.9rem;
 }
 
-/* Verify Button */
+.file-details {
+  background: rgba(78, 205, 196, 0.05);
+  border: 1px solid rgba(78, 205, 196, 0.3);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  animation: fadeIn 0.5s ease;
+}
+
+.file-details h3 {
+  color: #4ecdc4;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ccc;
+}
+
+.detail-item svg {
+  color: #4ecdc4;
+  font-size: 1.2rem;
+}
+
 .verify-button {
   display: block;
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(45deg, #4ecdc4, #00d4ff);
+  max-width: 400px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1rem;
-  box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+  margin: 1.5rem auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .verify-button:hover:not(:disabled) {
@@ -411,7 +455,31 @@ html {
   cursor: not-allowed;
 }
 
-/* Loading Spinner */
+.verification-process {
+  margin-top: 20px;
+}
+
+.progress-container {
+  height: 8px;
+  background: rgba(15, 15, 15, 0.6);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecdc4, #00d4ff);
+  transition: width 0.5s ease;
+}
+
+.verification-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .loading-spinner {
   display: inline-block;
   width: 20px;
@@ -427,7 +495,71 @@ html {
   to { transform: rotate(360deg); }
 }
 
-/* Verification Result */
+.verification-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(78, 205, 196, 0.2);
+  z-index: 0;
+}
+
+.step.active:not(:last-child)::after {
+  background: linear-gradient(90deg, #4ecdc4, #00d4ff);
+}
+
+.step-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+  border: 2px solid rgba(78, 205, 196, 0.3);
+  transition: all 0.3s ease;
+}
+
+.step.active .step-icon {
+  background: rgba(78, 205, 196, 0.2);
+  border-color: #4ecdc4;
+}
+
+.step-text {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #a0aec0;
+}
+
+.step.active .step-text {
+  color: #4ecdc4;
+}
+
 .verification-result {
   display: flex;
   align-items: center;
@@ -708,13 +840,13 @@ html {
 
 .verification-modal-content {
   background-color: #0a0a0a;
-  border: 1px solid rgba(78, 205, 196, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 2.5rem;
   width: 90%;
-  max-width: 500px;
+  max-width: 700px;
   text-align: center;
-  box-shadow: 0 0 30px rgba(78, 205, 196, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -858,7 +990,7 @@ html {
   padding: 3rem;
   border-radius: 10px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1062,41 +1194,6 @@ html {
   margin-bottom: 1.5rem;
   color: #4ecdc4;
   font-weight: 500;
-}
-
-/* File Details Styling */
-.file-details {
-  background: rgba(78, 205, 196, 0.05);
-  border: 1px solid rgba(78, 205, 196, 0.3);
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
-  animation: fadeIn 0.5s ease;
-}
-
-.file-details h3 {
-  color: #4ecdc4;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-}
-
-.details-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.detail-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ccc;
-}
-
-.detail-item svg {
-  color: #4ecdc4;
-  font-size: 1.2rem;
 }
 
 /* Verification Process Styling */
@@ -1419,6 +1516,7 @@ html {
   margin-bottom: 1rem;
   background: linear-gradient(45deg, #4ecdc4, #00d4ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

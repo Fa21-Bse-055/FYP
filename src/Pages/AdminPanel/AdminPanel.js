@@ -1,71 +1,131 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../Components/context/AuthContext';
+import { Navigate } from 'react-router-dom';
 import './AdminPanel.css';
 import Footer from '../../Components/Footer/Footer';
 
 const AdminPanel = () => {
   const [organizations, setOrganizations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [actionInProgress, setActionInProgress] = useState(false);
+  const { isAuthenticated, hasRole } = useAuth();
+
+  const fetchUnverifiedOrganizations = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:3000/api/admin/review', {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch unverified organizations');
+      }
+      
+      const data = await response.json(); 
+      console.log("Fetched organizations:", data); 
+      setOrganizations(data);
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching unverified organizations:', error);
+      setError('Failed to load organizations. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUnverifiedOrganizations = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/admin/review');
-        if (!response.ok) {
-          throw new Error('Failed to fetch unverified organizations');
-        }
-        const data = await response.json(); 
-        console.log("Fetched data:", data); 
-        setOrganizations(data);
-      } catch (error) {
-        console.error('Error fetching unverified organizations:', error);
-      }
-    };
     fetchUnverifiedOrganizations();
   }, []);
   
-
   const handleApprove = async (id) => {
     try {
-        console.log("id: ",id);
-        
-        const response = await fetch(`http://127.0.0.1:3000/api/admin/approve/${id}`, {
-          method: 'POST',
-          credentials: 'include'
-        });
+      setActionInProgress(true);
+      console.log("Approving organization with ID:", id);
       
-        // Check if the response is okay (status in the range 200-299)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await fetch(`http://localhost:3000/api/admin/approve/${id}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      
-        // Parse the response as JSON
-        const data = await response.json(); // This line converts the response to JSON
-        // Use 'data' instead of 'response.data'
-        console.log("handel ",data);
-        
-      
-      } catch (error) {
-        console.error("error:", error);
-      }      
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    
+      // Remove the approved organization from the list
+      setOrganizations(organizations.filter(org => org._id !== id));
+      alert("Organization approved successfully");
+    } catch (error) {
+      console.error("Error approving organization:", error);
+      alert("Error approving organization: " + error.message);
+    } finally {
+      setActionInProgress(false);
+      // Refresh the list after approval
+      fetchUnverifiedOrganizations();
+    }
   };
   
   const handleReject = async (id) => {
     try {
-        
+      setActionInProgress(true);
+      console.log("Rejecting organization with ID:", id);
+      
       const response = await fetch(`http://localhost:3000/api/admin/reject/${id}`, {
         method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
-      if (response.ok) {
-        // setOrganizations(organizations.filter(org => org._id !== id));
-        alert("Organization rejected successfully");
-      } else {
-        throw new Error('Failed to reject organization');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      // Remove the rejected organization from the list
+      setOrganizations(organizations.filter(org => org._id !== id));
+      alert("Organization rejected successfully");
     } catch (error) {
       console.error('Error rejecting organization:', error);
-      alert('Error rejecting organization');
+      alert('Error rejecting organization: ' + error.message);
+    } finally {
+      setActionInProgress(false);
+      // Refresh the list after rejection
+      fetchUnverifiedOrganizations();
+    }
+  };
+
+  const handleVerify = async (id) => {
+    try {
+      setActionInProgress(true);
+      console.log("Verifying organization with ID:", id);
+      
+      const response = await fetch(`http://localhost:3000/api/admin/verify/${id}`, {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.msg || 'Verification failed');
+      }
+      
+      const data = await response.json();
+      alert(data.msg);
+    } catch (error) {
+      console.error('Error verifying organization:', error);
+      alert('Error verifying organization: ' + error.message);
+    } finally {
+      setActionInProgress(false);
     }
   };
   
+  // Redirect if not authenticated or not an admin
+  if (!isAuthenticated() || !hasRole(['admin', 'super-admin'])) {
+    return <Navigate to="/adminLogin" />;
+  }
 
   return (
     <div className="admin-panel">
@@ -73,26 +133,38 @@ const AdminPanel = () => {
         <aside className="sidebar">
           <h2>Admin Panel</h2>
           <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/users">Users</a></li>
-            <li><a href="/reports">Reports</a></li>
-            <li><a href="/settings">Settings</a></li>
+            <li className="active"><a href="#organizations">Organizations</a></li>
+            <li><a href="#documents">Documents</a></li>
+            <li><a href="#users">Users</a></li>
+            <li><a href="#settings">Settings</a></li>
           </ul>
         </aside>
 
         <div className="main-content">
           <header className="header">
             <h1>Organizations Pending Verification</h1>
+            <button 
+              className="refresh-button" 
+              onClick={fetchUnverifiedOrganizations}
+              disabled={loading || actionInProgress}
+            >
+              {loading ? 'Refreshing...' : 'Refresh List'}
+            </button>
           </header>
           
           <section className="content">
-            {organizations.length > 0 ? (
+            {error && <div className="error-message">{error}</div>}
+            
+            {loading ? (
+              <div className="loading-spinner">Loading organizations...</div>
+            ) : organizations.length > 0 ? (
               <table>
                 <thead>
                   <tr>
                     <th>Organization Name</th>
                     <th>Email</th>
-                    <th>Action</th>
+                    <th>Website</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -101,15 +173,42 @@ const AdminPanel = () => {
                       <td>{org.organization_name}</td>
                       <td>{org.email}</td>
                       <td>
-                            <button onClick={() => handleApprove(org._id)}>Approve</button>
-                            <button onClick={() => handleReject(org._id)}>Reject</button>
+                        <a href={org.organization_web_url} target="_blank" rel="noopener noreferrer">
+                          {org.organization_web_url}
+                        </a>
+                      </td>
+                      <td className="action-buttons">
+                        <button 
+                          className="verify-button"
+                          onClick={() => handleVerify(org._id)}
+                          disabled={actionInProgress}
+                        >
+                          Verify
+                        </button>
+                        <button 
+                          className="approve-button"
+                          onClick={() => handleApprove(org._id)}
+                          disabled={actionInProgress}
+                        >
+                          Approve
+                        </button>
+                        <button 
+                          className="reject-button"
+                          onClick={() => handleReject(org._id)}
+                          disabled={actionInProgress}
+                        >
+                          Reject
+                        </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             ) : (
-              <p>No organizations pending verification.</p>
+              <div className="no-data-message">
+                <p>No organizations pending verification.</p>
+                <p>When organizations register and verify their email, they will appear here for your approval.</p>
+              </div>
             )}
           </section>
         </div>

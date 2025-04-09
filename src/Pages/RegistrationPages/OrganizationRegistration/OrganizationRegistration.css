@@ -131,6 +131,7 @@
 .left-section h1 {
     background: linear-gradient(45deg, #4ecdc4, #00d4ff);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 2rem;
     font-weight: 800;
@@ -217,6 +218,7 @@
 h1 {
     background: linear-gradient(45deg, #4ecdc4, #00d4ff) !important;
     -webkit-background-clip: text !important;
+    background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     text-align: center;
     margin-bottom: 1.5rem;
@@ -366,4 +368,96 @@ button {
         font-size: 0.8rem; /* Adjust input font size */
         padding: 0.5rem; /* Reduce padding for small inputs */
     }
+}
+
+.verification-message {
+    background: rgba(15, 23, 35, 0.7);
+    border-radius: 12px;
+    padding: 3rem;
+    max-width: 90%;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(64, 224, 208, 0.2);
+    backdrop-filter: blur(8px);
+    margin: 2rem auto;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    background: rgba(6, 214, 160, 0.1);
+    border: 2px solid rgba(6, 214, 160, 0.3);
+    color: #06d6a0;
+}
+
+.verification-message h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+}
+
+.verification-message p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #a0a0a0;
+    line-height: 1.6;
+}
+
+.action-links {
+    margin-top: 2rem;
+}
+
+.login-link {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: rgba(64, 224, 208, 0.1);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+    border-radius: 4px;
+    color: #4ecdc4;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    background: rgba(64, 224, 208, 0.2);
+    border-color: rgba(64, 224, 208, 0.5);
+}
+
+.error-message {
+    background-color: rgba(239, 71, 111, 0.1);
+    border: 1px solid rgba(239, 71, 111, 0.3);
+    color: #ef476f;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.verification-note {
+    background: rgba(10, 10, 10, 0.7);
+    border-left: 3px solid #4ecdc4;
+    padding: 10px 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #aaa;
+}
+
+.verification-note small {
+    font-size: 0.85rem;
 }

@@ -215,7 +215,7 @@ const Home = () => {
                 type="file"
                 id="file-upload"
                 onChange={handleFileChange}
-                accept=".pdf,.doc,.docx"
+                accept=".pdf"
               />
               <label htmlFor="file-upload" className="file-upload-label">
                 <FaFileUpload /> Choose File
@@ -251,6 +251,23 @@ const Home = () => {
               <button
                 className="verify-button"
                 disabled={true}
+              >
+                Verify Document
+              </button>
+            )}
+
+            {!isLoading && !verificationStatus && file && (
+              <button
+                className="verify-button"
+                onClick={() => {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    const fileContent = e.target.result;
+                    const hash = CryptoJS.SHA256(fileContent).toString();
+                    verifyDocumentHash(hash);
+                  };
+                  reader.readAsText(file);
+                }}
               >
                 Verify Document
               </button>

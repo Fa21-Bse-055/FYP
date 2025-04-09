@@ -4,7 +4,9 @@ import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import Footer from "../../Components/Footer/Footer";
 import { ThemeContext } from '../../Components/context/ThemeContext';
-import { FaFileUpload, FaCloudUploadAlt, FaDatabase, FaCheckCircle, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaFileUpload, FaCloudUploadAlt, FaDatabase, FaCheckCircle, FaExternalLinkAlt, FaExclamationTriangle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Components/context/AuthContext';
 import "./UploadDocument.css";
 
 function UploadDocument() {
@@ -14,7 +16,12 @@ function UploadDocument() {
   const [storedHash, setStoredHash] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [documentTitle, setDocumentTitle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const contractAddress = "0x26305c500596194ba56ec8c136ffd037c9b2f3ae";
   const contractABI = [
@@ -76,6 +83,7 @@ function UploadDocument() {
   const changeHandler = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+    setErrorMessage("");
 
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -88,27 +96,45 @@ function UploadDocument() {
   };
 
   const handleSubmission = async () => {
+    // Reset messages
+    setErrorMessage("");
+    setSuccessMessage("");
+    
     if (!selectedFile) {
-      console.error("No file selected");
+      setErrorMessage("Please select a file to upload");
+      return;
+    }
+
+    if (!documentTitle.trim()) {
+      setErrorMessage("Please provide a document title");
       return;
     }
 
     setIsLoading(true);
 
     try {
+      // Upload to IPFS via Pinata
       const response = await pinata.upload.file(selectedFile);
       const ipfsHash = response.cid || response.IpfsHash;
       if (!ipfsHash) {
         console.error("No IPFS hash found in Pinata response.");
+        setErrorMessage("Error uploading to IPFS. Please try again.");
+        setIsLoading(false);
         return;
       }
 
       setIpfsHash(ipfsHash);
-      console.log("Extracted IPFS Hash:", ipfsHash);
-
+      console.log("File uploaded to IPFS. Hash:", ipfsHash);
+      
+      // Store on blockchain
       await storeHashOnBlockchain(contentHash);
+      
+      // Save to backend or localStorage
+      await saveDocumentToBackend(contentHash, ipfsHash);
+      
     } catch (error) {
-      console.error("File upload failed:", error);
+      console.error("File upload process failed:", error);
+      setErrorMessage("Error during upload process. Please try again or check console for details.");
     } finally {
       setIsLoading(false);
     }
@@ -116,46 +142,130 @@ function UploadDocument() {
 
   const storeHashOnBlockchain = async (hash) => {
     try {
+      if (!window.ethereum) {
+        console.error("MetaMask not detected. Please install MetaMask.");
+        setErrorMessage("MetaMask not detected. Please install MetaMask to store documents on blockchain.");
+        return false;
+      }
+      
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
   
-      // Call the correct function as per your ABI
+      // Call the uploadDocumentHash function
       const tx = await contract.uploadDocumentHash(hash);
       console.log("Transaction Submitted. Hash:", tx.hash);
       setTransactionHash(tx.hash);
+      
+      setSuccessMessage("Transaction submitted to blockchain. Waiting for confirmation...");
+      
+      // Wait for transaction confirmation
       await tx.wait();
   
       console.log("Transaction successful. Content hash stored on blockchain:", hash);
+      return true;
     } catch (error) {
       console.error("Failed to store hash on blockchain:", error);
+      
+      if (error.code === 4001) {
+        // User rejected the transaction
+        setErrorMessage("Transaction was rejected. Please approve the transaction in MetaMask to store document on blockchain.");
+      } else if (error.message && error.message.includes("user rejected")) {
+        setErrorMessage("Transaction was rejected. Please approve the transaction in MetaMask to store document on blockchain.");
+      } else {
+        setErrorMessage("Error storing document on blockchain. Document will be tracked locally only.");
+      }
+      
+      return false;
     }
   };
   
-
-  const retrieveHashFromBlockchain = async () => {
-    setIsLoading(true);
+  const saveDocumentToBackend = async (contentHash, ipfsHash) => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      // Try the original endpoint
+      const response = await fetch('http://localhost:3000/api/users/upload-document', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: documentTitle,
+          description: "Uploaded via blockchain",
+          ipfsHash: ipfsHash,
+          contentHash: contentHash,
+          type: selectedFile.type,
+          size: selectedFile.size,
+          filename: selectedFile.name,
+          status: "pending"
+        }),
+        credentials: 'include'
+      });
 
-      const retrievedHashes = await contract.getDocumentHashes();
-      if (retrievedHashes && retrievedHashes.length > 0) {
-        // Get the most recent hash
-        const latestHash = retrievedHashes[retrievedHashes.length - 1];
-        setStoredHash(latestHash);
-        console.log("Retrieved hash from blockchain:", latestHash);
-      } else {
-        console.log("No hashes found on the blockchain");
-        setStoredHash("No hashes found");
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Document saved to backend:", data);
+        setSuccessMessage("Document uploaded successfully!");
+        setTimeout(() => navigate('/dashboard'), 1500);
+        return;
       }
+      
+      console.log("Primary endpoint failed, using localStorage fallback");
+      
+      // Get existing documents from localStorage or initialize empty array
+      const localDocuments = JSON.parse(localStorage.getItem('blockSecureDocuments') || '[]');
+      
+      // Add the new document
+      const newDocument = {
+        _id: `local_${Date.now()}`,
+        title: documentTitle,
+        description: "Uploaded via blockchain",
+        ipfsHash: ipfsHash,
+        contentHash: contentHash,
+        type: selectedFile.type,
+        size: selectedFile.size,
+        filename: selectedFile.name,
+        status: "pending",
+        createdAt: new Date().toISOString(),
+        userId: currentUser?.id || 'unknown',
+        orgName: currentUser?.organization_name || 'Unknown Organization'
+      };
+      
+      localDocuments.push(newDocument);
+      
+      // Save back to localStorage
+      localStorage.setItem('blockSecureDocuments', JSON.stringify(localDocuments));
+      
+      console.log("Document saved to localStorage:", newDocument);
+      
+      setSuccessMessage("Document uploaded to blockchain! Using local storage to track documents.");
+      setTimeout(() => navigate('/dashboard'), 1500);
     } catch (error) {
-      console.error("Failed to retrieve hash from blockchain:", error);
-    } finally {
-      setIsLoading(false);
+      console.error("Error saving document to backend:", error);
+      
+      // Error fallback - use localStorage
+      const localDocuments = JSON.parse(localStorage.getItem('blockSecureDocuments') || '[]');
+      
+      const newDocument = {
+        _id: `local_${Date.now()}`,
+        title: documentTitle,
+        description: "Uploaded via blockchain",
+        ipfsHash: ipfsHash,
+        contentHash: contentHash,
+        type: selectedFile.type,
+        size: selectedFile.size,
+        filename: selectedFile.name,
+        status: "pending",
+        createdAt: new Date().toISOString(),
+        userId: currentUser?.id || 'unknown',
+        orgName: currentUser?.organization_name || 'Unknown Organization'
+      };
+      
+      localDocuments.push(newDocument);
+      localStorage.setItem('blockSecureDocuments', JSON.stringify(localDocuments));
+      
+      setSuccessMessage("Document uploaded to blockchain! Using local storage to track documents.");
+      setTimeout(() => navigate('/dashboard'), 1500);
     }
   };
 
@@ -180,6 +290,31 @@ function UploadDocument() {
           </p>
           
           <div className="upload-section">
+            {errorMessage && (
+              <div className="error-message">
+                <FaExclamationTriangle /> {errorMessage}
+              </div>
+            )}
+            
+            {successMessage && (
+              <div className="success-message">
+                <FaCheckCircle /> {successMessage}
+              </div>
+            )}
+            
+            <div className="form-group">
+              <label htmlFor="document-title">Document Title:</label>
+              <input
+                type="text"
+                id="document-title"
+                value={documentTitle}
+                onChange={(e) => setDocumentTitle(e.target.value)}
+                placeholder="Enter document title"
+                required
+                className="form-input"
+              />
+            </div>
+            
             <label htmlFor="file-upload" className="file-upload-label">
               <FaFileUpload /> Choose File
               <input 
@@ -196,10 +331,7 @@ function UploadDocument() {
               </div>
             )}
             
-            <div 
-              className="buttons-container"
-              style={{ marginTop: "-15px" }}
-            >
+            <div className="buttons-container">
               <button 
                 onClick={handleSubmission} 
                 className="primary-button"
@@ -212,22 +344,6 @@ function UploadDocument() {
                 ) : (
                   <>
                     <FaCloudUploadAlt /> Upload to Blockchain
-                  </>
-                )}
-              </button>
-              
-              <button 
-                onClick={retrieveHashFromBlockchain} 
-                className="secondary-button"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <span className="loading-spinner"></span> Retrieving...
-                  </>
-                ) : (
-                  <>
-                    <FaDatabase /> Retrieve Stored Hash
                   </>
                 )}
               </button>

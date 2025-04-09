@@ -3,6 +3,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "./GenerateDocument.css";
 import { FaFileDownload, FaUserAlt, FaCalendarAlt, FaCertificate } from "react-icons/fa";
+import { useAuth } from "../../Components/context/AuthContext";
 
 function GenerateDocument() {
   const [name, setName] = useState("");
@@ -10,6 +11,7 @@ function GenerateDocument() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [issuanceDate, setIssuanceDate] = useState("");
+  const { currentUser } = useAuth();
   
   // Add animation effect for particles
   useEffect(() => {
@@ -27,6 +29,28 @@ function GenerateDocument() {
       const pdf = new jsPDF();
       pdf.addImage(imgData, "PNG", 0, 0, 210, 297); // A4 size in mm
       pdf.save("certificate.pdf");
+      
+      // Track the generated document in localStorage
+      const generatedDoc = {
+        id: `gen_${Date.now()}`,
+        name: name || "Unnamed Certificate",
+        type: "certificate",
+        date: new Date().toISOString(),
+        userId: currentUser?.id || 'unknown',
+        orgName: currentUser?.organization_name || 'Unknown Organization'
+      };
+      
+      // Get existing generated documents or initialize empty array
+      const existingDocs = JSON.parse(localStorage.getItem('generatedDocuments') || '[]');
+      
+      // Add new document to array
+      existingDocs.push(generatedDoc);
+      
+      // Save back to localStorage
+      localStorage.setItem('generatedDocuments', JSON.stringify(existingDocs));
+      
+      console.log('Document generated and tracked:', generatedDoc);
+      alert('Certificate generated and downloaded successfully!');
     });
   };
 

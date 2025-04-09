@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-logo-section">
           <Link to="/" className="footer-logo">
-            <span className="logo-icon">◈</span> <span className="tech-span">Block</span>Secure
+            <span className="logo-icon">◈</span> <span className="tech-span">BlockSecure</span>
           </Link>
         </div>
 
@@ -28,7 +28,6 @@ const Footer = () => {
             <ul className="footer-links">
               <li><Link to="/uploadDocument">Upload Document</Link></li>
               <li><Link to="/generateDocument">Generate Document</Link></li>
-              <li><Link to="/verify">Verify Document</Link></li>
             </ul>
           </div>
 

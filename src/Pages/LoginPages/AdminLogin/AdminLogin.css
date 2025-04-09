@@ -88,6 +88,7 @@
 h1 {
   background: linear-gradient(45deg, #4ecdc4, #00d4ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
   margin-bottom: 1.5rem;
@@ -185,5 +186,45 @@ h1::after {
 .forgot-password a:hover {
   color: #00d4ff;
   text-decoration: none;
+}
+
+.error-message {
+  background-color: rgba(255, 87, 87, 0.1);
+  border: 1px solid rgba(255, 87, 87, 0.3);
+  color: #ff5757;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Disable button styles */
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Disable input styles */
+input:disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
 }
   

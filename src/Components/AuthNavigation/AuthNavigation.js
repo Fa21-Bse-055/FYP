@@ -43,7 +43,6 @@ const AuthNavigation = () => {
             <ul>
               <li><Link to="/AdminRegistration">Admin Registration</Link></li>
               <li><Link to="/OrganizationRegistration">Organization Registration</Link></li>
-              <li><Link to="/StudentRegistration">Student Registration</Link></li>
             </ul>
           </div>
           <div className="auth-dropdown-section">

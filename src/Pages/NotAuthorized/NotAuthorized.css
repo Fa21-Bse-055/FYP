@@ -1,0 +1,205 @@
+.not-authorized-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f1723 0%, #1a2639 100%);
+  color: #e0e0e0;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.not-authorized-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, rgba(16, 23, 41, 0.8) 21px, transparent 1%) center,
+    linear-gradient(rgba(16, 23, 41, 0.8) 21px, transparent 1%) center,
+    rgba(239, 71, 111, 0.05);
+  background-size: 22px 22px;
+  z-index: 0;
+}
+
+.cyber-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cyber-grid::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, transparent 0%, transparent 25%, rgba(239, 71, 111, 0.1) 25.5%, transparent 26%, transparent 100%);
+  background-size: 50px 50px;
+  animation: gridAnimation 60s linear infinite;
+}
+
+.cyber-grid::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, rgba(239, 71, 111, 0.1) 0%, transparent 20%);
+  background-size: 40px 40px;
+  animation: gridAnimation 30s linear infinite reverse;
+}
+
+@keyframes gridAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.not-authorized-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(15, 23, 35, 0.7);
+  border-radius: 12px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(239, 71, 111, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #ef476f, #ff5e78);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(239, 71, 111, 0.5);
+  position: relative;
+}
+
+.error-code::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #ef476f, #ff5e78);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+}
+
+.error-message {
+  margin-bottom: 2.5rem;
+}
+
+.error-message p {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.action-button {
+  padding: 0.8rem 1.5rem;
+  background: rgba(26, 38, 57, 0.8);
+  border: 1px solid rgba(239, 71, 111, 0.3);
+  border-radius: 8px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(239, 71, 111, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(239, 71, 111, 0.6);
+  background: rgba(26, 38, 57, 0.9);
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+.action-button.home {
+  background: linear-gradient(90deg, #ef476f, #ff5e78);
+  color: #0f1723;
+  border: none;
+}
+
+.action-button.home:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(239, 71, 111, 0.4);
+}
+
+@media (max-width: 768px) {
+  .not-authorized-content {
+    padding: 2rem;
+  }
+  
+  .error-code {
+    font-size: 6rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #4ecdc4, #00d4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+} 
