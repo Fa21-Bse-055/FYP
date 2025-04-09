@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import './OrganizationRegistration.css';
 import Footer from '../../../Components/Footer/Footer';
@@ -26,12 +27,19 @@ import { Link } from 'react-router-dom';
  * 
  * The relevant code can be found in the handleSubmit function below.
  */
+=======
+import React, { useState, useEffect } from "react";
+import "./OrganizationRegistration.css";
+import Footer from "../../../Components/Footer/Footer";
+import AuthNavigation from "../../../Components/AuthNavigation/AuthNavigation";
+import { Navigate } from "react-router-dom";
+>>>>>>> b73de08680986a68815d1f41fe0963c947f8ac25
 
 const OrganizationRegistration = () => {
-  const [organizationName, setOrganizationName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [organizationWebUrl, setOrganizationWebUrl] = useState('');
+  const [organizationName, setOrganizationName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [organizationWebUrl, setOrganizationWebUrl] = useState("");
   const [CNICImage, setCNICImage] = useState(null);
   const [registrationStatus, setRegistrationStatus] = useState({
     success: false,
@@ -43,19 +51,19 @@ const OrganizationRegistration = () => {
   // Add animation for particles
   useEffect(() => {
     const particles = Array.from({ length: 20 }).map((_, i) => {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.top = `${Math.random() * 100}%`;
       particle.style.animationDelay = `${Math.random() * 10}s`;
       return particle;
     });
 
-    const container = document.querySelector('.login-container');
-    particles.forEach(particle => container.appendChild(particle));
+    const container = document.querySelector(".login-container");
+    particles.forEach((particle) => container.appendChild(particle));
 
     return () => {
-      particles.forEach(particle => {
+      particles.forEach((particle) => {
         if (particle.parentNode === container) {
           container.removeChild(particle);
         }
@@ -77,6 +85,7 @@ const OrganizationRegistration = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("organization_web_url", organizationWebUrl);
+<<<<<<< HEAD
     if (CNICImage) {
       formData.append("CNICImage", CNICImage);
     }
@@ -87,6 +96,13 @@ const OrganizationRegistration = () => {
       
       const response = await fetch('http://localhost:3000/api/users/register', {
         method: 'POST',
+=======
+    formData.append("CNICImage", CNICImage);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/users/register", {
+        method: "POST",
+>>>>>>> b73de08680986a68815d1f41fe0963c947f8ac25
         body: formData,
       });
 
@@ -140,6 +156,7 @@ const OrganizationRegistration = () => {
 
         
       } else {
+<<<<<<< HEAD
         setRegistrationStatus({
           success: false,
           message: result.msg || 'Registration failed. Please try again.',
@@ -158,6 +175,19 @@ const OrganizationRegistration = () => {
     }
   };
 
+=======
+        alert(result.message || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  if (sucessRegistration) {
+    return <Navigate to="/OrganizationLogin" />;
+  }
+
+>>>>>>> b73de08680986a68815d1f41fe0963c947f8ac25
   return (
     <div>
       <div className="login-container">
@@ -165,13 +195,12 @@ const OrganizationRegistration = () => {
         <div className="left-section">
           <h1>Welcome to Organization Registration</h1>
           <p>
-            Join our secure blockchain-based document verification platform. Our registration process is quick and easy, taking no more than 10 minutes to complete.
+            Join our secure blockchain-based document verification platform. Our
+            registration process is quick and easy, taking no more than 10
+            minutes to complete.
           </p>
           <div className="quote img">
-            <img
-              src="org1.jpeg"
-              alt="Organization Registration"
-            />
+            <img src="org1.jpeg" alt="Organization Registration" />
           </div>
         </div>
         <div className="right-section">
@@ -192,6 +221,7 @@ const OrganizationRegistration = () => {
                 <Link to="/organizationLogin" className="login-link">Go to Login</Link>
               </div>
             </div>
+<<<<<<< HEAD
           ) : (
             <form className="login-box" onSubmit={handleSubmit}>
               <h1>Organization Registration</h1>
@@ -267,8 +297,63 @@ const OrganizationRegistration = () => {
             </form>
           )}
         </div>  
+=======
+            <div className="space">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your Password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space">
+              <label htmlFor="domain">Domain Name:</label>
+              <input
+                type="text"
+                id="domain"
+                name="domain"
+                placeholder="Enter Domain name..."
+                value={organizationWebUrl}
+                onChange={(e) => setOrganizationWebUrl(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space">
+              <label htmlFor="CNICImage">Image:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                onChange={(e) => setCNICImage(e.target.files[0])}
+                required
+              />
+            </div>
+            <div>
+              <button type="submit">
+                <span>Register Organization</span>
+              </button>
+            </div>
+          </form>
+        </div>
+>>>>>>> b73de08680986a68815d1f41fe0963c947f8ac25
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
