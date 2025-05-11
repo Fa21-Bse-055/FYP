@@ -21,7 +21,7 @@ function UploadDocument() {
   const [successMessage, setSuccessMessage] = useState("");
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser , toggle , setToggle } = useAuth();
 
   const contractAddress = "0x26305c500596194ba56ec8c136ffd037c9b2f3ae";
   const contractABI = [
@@ -82,19 +82,25 @@ function UploadDocument() {
 
   const changeHandler = (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
-    setErrorMessage("");
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const fileContent = e.target.result;
-      const hash = CryptoJS.SHA256(fileContent).toString();
-      setContentHash(hash);
-      console.log("Content Hash:", hash);
-    };
-    reader.readAsText(file);
+      setSelectedFile(file);
+      setErrorMessage("");
+    
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const arrayBuffer = e.target.result;
+    
+        // Hash using same method as above
+        const wordArray = CryptoJS.lib.WordArray.create(
+        new Uint8Array(arrayBuffer)
+      );
+      const hashHex = CryptoJS.SHA256(wordArray).toString(CryptoJS.enc.Hex);
+      console.log("SHA-256:", hashHex);
+      setContentHash(hashHex);
+      };
+    
+      reader.readAsArrayBuffer(file);
   };
-
+  
   const handleSubmission = async () => {
     // Reset messages
     setErrorMessage("");
@@ -128,6 +134,7 @@ function UploadDocument() {
       
       // Store on blockchain
       await storeHashOnBlockchain(contentHash);
+      // setToggle(true)
       
       // Save to backend or localStorage
       await saveDocumentToBackend(contentHash, ipfsHash);

@@ -1,0 +1,178 @@
+/* src/pages/UploadCSV.css */
+/* Ensure full-page dark background */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0a;
+}
+
+.uploadcsv-container {
+  max-width: auto;
+  max-height: max-content;
+  margin: 2rem auto;
+  padding: 1rem;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0a0a0a;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #00f6ff;
+}
+
+.send-options {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.send-options button {
+  padding: 6px 10px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.upload-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.upload-form input {
+  padding: 0.6rem;
+  background-color: #111;
+  color: #0ff;
+  border: 1px solid #0ff;
+  border-radius: 4px;
+}
+
+.upload-form button {
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(to right, #00f6ff, #00c6ff);
+  border: none;
+  color: #000;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.message {
+  text-align: center;
+  margin: 0.5rem 0;
+  color: #ff0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+.search-bar .icon {
+  margin-right: 0.5rem;
+  color: #00f6ff;
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 1rem;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.cert-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.cert-card:hover {
+  transform: scale(1.01);
+}
+
+.cert-card h3 {
+  margin: 0 0 0.5rem;
+  color: #00f6ff;
+  font-weight: bold;
+}
+
+.cert-card p {
+  margin: 0.3rem 0;
+  color: #ccc;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.actions button {
+  flex: 1;
+  background: linear-gradient(to right, #00f6ff, #00c6ff);
+  border: none;
+  color: #000;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.actions button:nth-child(2) {
+  background: linear-gradient(to right, #0044ff, #00aaff);
+  color: #fff;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  background: #111;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff0033;
+  color: #fff;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+}

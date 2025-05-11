@@ -7,7 +7,7 @@ body {
   .admin-panel {
     min-height: 100vh;
     background: linear-gradient(135deg, #0f1723 0%, #1a2639 100%);
-    color: #e0e0e0;
+    color: #f78b8b;
     font-family: 'Poppins', sans-serif;
     position: relative;
     overflow: hidden;

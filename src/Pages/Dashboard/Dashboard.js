@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../Components/context/AuthContext';
+import TransactionsTable from '../TranscationPage/TransactionsTable';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -8,120 +9,112 @@ const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [stats, setStats] = useState({
-    total: 0,
-    generatedCount: 0
-  });
+  const [stats, setStats] = useState({ total: 0, generatedCount: 0 });
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const [students, setStudents] = useState([]); // student list
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const fetchStudents = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/chat/by-student');
+      const data = await res.json();
+      setStudents(data.chats);
+    } catch (err) {
+      console.error("Failed to load student list", err);
+    }
+  };
+
+  const fetchChatMessages = async (email) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/chat/${email}`);
+      const data = await res.json();
+      setChatMessages(data.messages || []);
+    } catch (err) {
+      console.error("Failed to fetch messages", err);
+    }
+  };
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !selectedStudent) return;
+
+    const newMsg = { studentEmail: selectedStudent, sender: 'org', content: newMessage.trim() };
+
+    try {
+      const res = await fetch('http://localhost:3000/api/chat/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMsg),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setChatMessages(data.chat.messages);
+        setNewMessage("");
+      }
+    } catch (err) {
+      console.error("Failed to send message", err);
+    }
+  };
 
   const fetchDocuments = async () => {
     setLoading(true);
     try {
-      // First try the primary endpoint
       let response = await fetch('http://localhost:3000/api/users/my-documents', {
         credentials: 'include',
-        cache: 'no-cache' // Add no-cache to prevent caching
+        cache: 'no-cache'
       });
 
       let useLocalStorage = false;
 
       if (!response.ok) {
-        console.log("Primary endpoint failed, trying alternative...");
-        try {
-          response = await fetch('http://localhost:3000/api/users/documents', {
-            credentials: 'include',
-            cache: 'no-cache'
-          });
-        } catch (err) {
-          console.error("Alternative endpoint also failed:", err);
-          useLocalStorage = true;
-        }
+        response = await fetch('http://localhost:3000/api/users/documents', {
+          credentials: 'include',
+          cache: 'no-cache'
+        });
       }
 
       let docs = [];
-
-      if (!response.ok || useLocalStorage) {
-        console.log("API endpoints failed, using localStorage instead");
-        // If API fails, use localStorage as fallback but filter by current organization ID
+      if (!response.ok) {
         const localDocs = JSON.parse(localStorage.getItem('blockSecureDocuments') || '[]');
-        // Only show documents for the current organization
         docs = localDocs.filter(doc => doc.userId === currentUser?.id);
-        console.log("Documents loaded from localStorage (filtered by organization):", docs);
       } else {
         const data = await response.json();
-        console.log("Fetched documents from API:", data);
         docs = data.documents || [];
-        
-        // Merge with any documents in localStorage that belong to this organization
         const localDocs = JSON.parse(localStorage.getItem('blockSecureDocuments') || '[]');
-        if (localDocs.length > 0) {
-          console.log("Merging with localStorage documents for this organization");
-          // Filter by current organization and content hash
-          const apiHashes = docs.map(doc => doc.contentHash);
-          const uniqueLocalDocs = localDocs.filter(doc => 
-            !apiHashes.includes(doc.contentHash) && 
-            doc.contentHash && 
-            doc.userId === currentUser?.id
-          );
-          docs = [...docs, ...uniqueLocalDocs];
-        }
+        const apiHashes = docs.map(doc => doc.contentHash);
+        const uniqueLocalDocs = localDocs.filter(doc =>
+          !apiHashes.includes(doc.contentHash) &&
+          doc.contentHash &&
+          doc.userId === currentUser?.id
+        );
+        docs = [...docs, ...uniqueLocalDocs];
       }
-      
+
       setDocuments(docs);
-      
-      // Get generated documents count from localStorage - only for current organization
       const allGeneratedDocs = JSON.parse(localStorage.getItem('generatedDocuments') || '[]');
       const generatedDocs = allGeneratedDocs.filter(doc => doc.userId === currentUser?.id);
-      
-      // Calculate stats
-      const total = docs.length;
-      const generatedCount = generatedDocs.length;
-      
-      setStats({ total, generatedCount });
+      setStats({ total: docs.length, generatedCount: generatedDocs.length });
+
     } catch (err) {
-      console.error("Error fetching documents:", err);
       setError(err.message);
-      
-      // Last resort: try localStorage
-      try {
-        const localDocs = JSON.parse(localStorage.getItem('blockSecureDocuments') || '[]');
-        // Filter by current organization
-        const filteredDocs = localDocs.filter(doc => doc.userId === currentUser?.id);
-        console.log("Using localStorage as last resort (filtered by organization):", filteredDocs);
-        setDocuments(filteredDocs);
-        
-        // Get generated documents count - only for current organization
-        const allGeneratedDocs = JSON.parse(localStorage.getItem('generatedDocuments') || '[]');
-        const generatedDocs = allGeneratedDocs.filter(doc => doc.userId === currentUser?.id);
-        
-        // Calculate stats
-        const total = filteredDocs.length;
-        const generatedCount = generatedDocs.length;
-        
-        setStats({ total, generatedCount });
-      } catch (localStorageError) {
-        console.error("Even localStorage failed:", localStorageError);
-      }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRefresh = () => {
-    setRefreshKey(prevKey => prevKey + 1);
-  };
+  const handleRefresh = () => setRefreshKey(prev => prev + 1);
 
   useEffect(() => {
     fetchDocuments();
+    fetchStudents();
   }, [refreshKey]);
 
-  if (loading && documents.length === 0) {
-    return (
-      <div className="dashboard-container">
-        <div className="loading-spinner"></div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (selectedStudent) fetchChatMessages(selectedStudent);
+  }, [selectedStudent]);
 
   return (
     <div className="dashboard-container">
@@ -130,7 +123,7 @@ const Dashboard = () => {
           <h1>Organization Dashboard</h1>
           <p>Welcome, {currentUser?.organization_name || 'Organization'}</p>
         </div>
-        <button onClick={handleRefresh} className="refresh-button" title="Refresh dashboard">
+        <button onClick={handleRefresh} className="refresh-button">
           {loading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
@@ -147,18 +140,9 @@ const Dashboard = () => {
       </div>
 
       <div className="action-buttons">
-        <Link to="/uploadDocument" className="action-button">
-          <span className="button-icon">+</span>
-          Upload New Document
-        </Link>
-        <Link to="/generateDocument" className="action-button">
-          <span className="button-icon">📄</span>
-          Generate Document
-        </Link>
-        <Link to="/verificationFile" className="action-button">
-          <span className="button-icon">⬇️</span>
-          Download Verification File
-        </Link>
+        <Link to="/uploadDocument" className="action-button">+ Upload New Document</Link>
+        <Link to="/generateDocument" className="action-button">📄 Generate Document</Link>
+        <Link to="/verificationFile" className="action-button">⬇️ Download Verification File</Link>
       </div>
 
       {error && (
@@ -170,17 +154,11 @@ const Dashboard = () => {
 
       <div className="documents-section">
         <h2>Your Documents</h2>
-        {loading && documents.length > 0 && (
-          <div className="loading-overlay">Refreshing documents...</div>
-        )}
         {documents.length === 0 ? (
-          <div className="no-documents">
-            <p>You haven't uploaded any documents yet.</p>
-            <Link to="/uploadDocument" className="upload-link">Upload your first document</Link>
-          </div>
+          <p>You haven't uploaded any documents yet.</p>
         ) : (
           <div className="documents-grid">
-            {documents.map((doc) => (
+            {documents.map(doc => (
               <div key={doc._id} className={`document-card ${doc.status}`}>
                 <div className="document-header">
                   <h3>{doc.title}</h3>
@@ -188,24 +166,56 @@ const Dashboard = () => {
                     {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
                   </span>
                 </div>
-                <p className="document-description">{doc.description}</p>
-                <div className="document-footer">
-                  <span className="document-date">
-                    Uploaded: {new Date(doc.createdAt).toLocaleDateString()}
-                  </span>
-                  {doc.feedback && (
-                    <div className="document-feedback">
-                      <strong>Feedback:</strong> {doc.feedback}
-                    </div>
-                  )}
-                </div>
+                <p>{doc.description}</p>
+                <span>Uploaded: {new Date(doc.createdAt).toLocaleDateString()}</span>
               </div>
             ))}
           </div>
+        )}
+      </div>
+      <div>
+        <TransactionsTable/>
+      </div>
+
+      {/* Chat Panel */}
+      <div className="chat-panel">
+        <h2>Chat with Students</h2>
+        <select onChange={(e) => setSelectedStudent(e.target.value)} value={selectedStudent || ''}>
+          <option value="" disabled>Select a student</option>
+          {students.map(email => (
+            <option key={email} value={email}>{email}</option>
+          ))}
+        </select>
+
+        {selectedStudent && (
+          <>
+            <div className="chat-box">
+              {chatMessages.length === 0 ? (
+                <p className="no-messages">No messages yet.</p>
+              ) : (
+                chatMessages.map((msg, idx) => (
+                  <div key={idx} className={`chat-message ${msg.sender === 'org' ? 'sent' : 'received'}`}>
+                    <p><strong>{msg.sender === 'org' ? "You" : "Student"}:</strong> {msg.content}</p>
+                    <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="chat-input-container">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+              />
+              <button onClick={handleSendMessage}>Send</button>
+            </div>
+          </>
         )}
       </div>
     </div>
   );
 };
 
-export default Dashboard; 
+export default Dashboard;

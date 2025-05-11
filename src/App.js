@@ -10,7 +10,7 @@ import Contact from './Pages/Contact/Contact';
 import OrganizationLogin from './Pages/LoginPages/OrginizationLogin/OrginizationLogin';
 import Verification from './Pages/Verification';
 import DownloadVerificationFile from './Pages/FilePage/FilePage';
-// import StudentRegistration from './Pages/RegistrationPages/StudentRegistration/StudentRegistration';
+import StudentRegistration from './Pages/RegistrationPages/StudentRegistration/StudentRegistration';
 import OrganizationRegistration from './Pages/RegistrationPages/OrganizationRegistration/OrganizationRegistration';
 import AdminPanel from './Pages/AdminPanel/AdminPanel';
 import AdminRegistration from './Pages/RegistrationPages/SuperAdminRegistration/AdminRegistration';
@@ -19,10 +19,17 @@ import GenerateDocument from './Pages/Generate-Document/GenerateDocument';
 import UploadDocument from './Pages/Upload-Document/UploadDocument';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import NotAuthorized from './Pages/NotAuthorized/NotAuthorized';
+import UploadCSV from './Pages/Upload CSV File/UploadCSV';
+import StudentDashboard from './Pages/StudentDashboard/StudentDashboard';
+import { ClerkProvider } from '@clerk/clerk-react';
+import TransactionsTable from './Pages/TranscationPage/TransactionsTable';
 import './App.css';
+
+const publishableKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY
 
 function App() {
   return (
+    <ClerkProvider publishableKey={publishableKey}>
     <ThemeProvider>
       <Router>
         <AuthProvider>
@@ -38,6 +45,9 @@ function App() {
               <Route path="/organizationRegistration" element={<OrganizationRegistration />} />
               <Route path="/verify" element={<Verification />} />
               <Route path="/not-authorized" element={<NotAuthorized />} />
+              <Route path="/studentLogin" element={<StudentRegistration />} />
+              <Route path="/studentDashboard" element={<StudentDashboard />} />
+              <Route path="/uploadCSV" element={<UploadCSV />} />
 
               {/* Protected routes for organizations */}
               <Route element={<ProtectedRoute allowedRoles={["organization"]} redirectPath="/organizationLogin" />}>
@@ -45,6 +55,7 @@ function App() {
                 <Route path="/verificationFile" element={<DownloadVerificationFile />} />
                 <Route path="/uploadDocument" element={<UploadDocument />} />
                 <Route path="/generateDocument" element={<GenerateDocument />} />
+                <Route path="/transcationPage" element={<TransactionsTable />} />
               </Route>
 
               {/* Protected routes for admins */}
@@ -61,6 +72,7 @@ function App() {
         </AuthProvider>
       </Router>
     </ThemeProvider>
+    </ClerkProvider>
   );
 }
 

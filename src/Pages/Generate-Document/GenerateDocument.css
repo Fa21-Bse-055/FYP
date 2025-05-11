@@ -252,6 +252,19 @@
   text-shadow: none;
 }
 
+.qr-scan {
+  margin-top: 195px;
+  width: fit-content;
+  height: fit-content;
+  margin-left: 220px;
+  margin-top: 260px;
+}
+
+#qr-id {
+  width: 125px;
+  height: 85px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 992px) {
   .content {
@@ -342,6 +355,7 @@
   display: flex;
   justify-content: center;
   margin-top: 30px;
+  padding: 10px;
 }
 
 .pdf-button {
@@ -360,6 +374,7 @@
   overflow: hidden;
   z-index: 1;
   min-width: 200px;
+  margin: 10px;
 }
 
 .pdf-button::before {
@@ -383,3 +398,60 @@
   left: 100%;
 }
   
+
+/* Style for form inputs */
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 10px 15px;
+  margin: 8px 0 20px 0;
+  display: block;
+  border: 2px solid #00fff7; /* neon blue */
+  border-radius: 10px;
+  background-color: #111827; /* dark background */
+  color: #00fff7;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Hover and focus for inputs and selects */
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: #00e0ff;
+  background-color: #1f2937; /* slightly lighter dark */
+  outline: none;
+}
+
+/* Style options inside select */
+select option {
+  background-color: #111827;
+  color: #00fff7;
+}
+
+/* Form labels */
+label {
+  color: #00fff7;
+  font-weight: bold;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Buttons minor improvements if needed */
+.pdf-button {
+  background-color: #00fff7;
+  color: #111827;
+  font-weight: bold;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin-right: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-button:hover {
+  background-color: #00e0ff;
+}

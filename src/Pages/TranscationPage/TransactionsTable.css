@@ -1,0 +1,101 @@
+.table-container {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    background-color: rgba(10, 15, 36, 0.95);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 234, 255, 0.2);
+    backdrop-filter: blur(8px);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: visible;
+    padding: 1rem;
+    margin-top: 40px;
+  }
+  
+  .table-container h2 {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00eaff;
+    margin-bottom: 0.75rem;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  table {
+    width: 100%;
+    min-width: 1500px;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    table-layout: auto;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0f7fa;
+    user-select: text;
+  }
+  
+  th {
+    background-color: rgba(0, 234, 255, 0.15);
+    color: #00eaff;
+    font-weight: bold;
+  }
+  
+  th:nth-child(1), td:nth-child(1) { min-width: 200px; } /* Hash */
+  th:nth-child(2), td:nth-child(2) { min-width: 80px; }  /* Block */
+  th:nth-child(3), td:nth-child(3) { min-width: 100px; } /* Age */
+  th:nth-child(4), td:nth-child(4) { min-width: 200px; } /* From */
+  th:nth-child(5), td:nth-child(5) { min-width: 200px; } /* To */
+  th:nth-child(6), td:nth-child(6) { min-width: 100px; } /* Value */
+  th:nth-child(7), td:nth-child(7) { min-width: 100px; } /* Txn Fee */
+  
+  .hash {
+    color: #00eaff;
+    font-weight: 500;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 12px;
+    gap: 8px;
+  }
+  
+  .pagination button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background-color: #00eaff;
+    color: #0a0f24;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination button:hover:not(:disabled) {
+    background-color: #00c4cc;
+    transform: scale(1.05);
+  }
+  
+  .pagination span {
+    color: #e0e0e0;
+    font-size: 0.85rem;
+  }
+  

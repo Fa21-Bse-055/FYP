@@ -10,6 +10,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [toggle, setToggle] = useState(true);
+  const [certificate , setCertificate] = useState("");
   const navigate = useNavigate();
 
   // Check if user is logged in on initial load
@@ -56,19 +58,18 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       console.log("Login response:", data);
 
-      // Check if organization account is verified
-      if (role === 'organization' && data.user.is_verified === false) {
-        // Clear any authentication tokens to prevent login
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        return { success: false, error: 'Account not verified. Please check your email for verification link.' };
-      }
+// Check if organization account is verified
+if (role === 'organization' && data.user.is_verified === false) {
+  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  return { success: false, error: 'Account not verified. Please check your email for verification link.' };
+}
 
-      // Check if organization is approved by admin
-      if (role === 'organization' && data.user.is_approved === false) {
-        // Clear any authentication tokens to prevent login
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        return { success: false, error: 'Your account is pending admin approval. Please wait for approval to login.' };
-      }
+// Check if organization is approved by admin
+if (role === 'organization' && data.user.is_approved === false) {
+  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  return { success: false, error: 'Your account is pending admin approval. Please wait for approval to login.' };
+}
+
 
       // Set user data based on response
       if (role === 'admin') {
@@ -145,7 +146,11 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     hasRole,
-    isAuthenticated
+    isAuthenticated,
+    toggle,
+    setToggle,
+    certificate,
+    setCertificate
   };
 
   return (

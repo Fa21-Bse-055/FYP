@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import { ThemeContext } from '../../Components/context/ThemeContext';
+import axios from 'axios';
 import './Home.css';
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const verificationSectionRef = useRef(null);
+  const render = useRef(1);
 
   // Smart contract details
   const verificationContractAddress = '0x32f3b827364d9be1e2c254496f84c78419697df4'; 
@@ -68,12 +70,72 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    async function fun() {
+      const searchParams = new URLSearchParams(window.location.search);
+      const docId = searchParams.get("docId");
+      if (docId) {
+        scrollToVerification();
+        try {
+          const response = await axios.get(
+            `http://172.0.6.207:3000/api/users/getCert?cert_id=${docId}`
+          );
+          // alert(response.data.data.cert_hash);
+          await verifyDocumentHash(response.data.data.cert_hash);
+        } catch (e) {
+          alert(e.message);
+        }
+      }
+    }
+    if (render.current === 1) {
+      fun();
+    }
+    return () => {
+      render.current = 2;
+    };
+  }, []);
+
   const scrollToVerification = () => {
     verificationSectionRef.current?.scrollIntoView({ 
       behavior: 'smooth',
       block: 'start'
     });
   };
+useEffect(()=>{
+  const queryParams = new URLSearchParams(document.location.search)
+  if(queryParams.get("docHash")){
+    console.log(queryParams.get("docHash"));
+    scrollToVerification();
+    verifyDocumentHash(queryParams.get("docHash"))
+  }
+},[])
+  // const handleFileChange = (e) => {
+  //   const selectedFile = e.target.files[0];
+  //   setFile(selectedFile);
+  //   setVerificationStatus(null);
+  //   setErrorMessage('');
+  //   setFileDetails(null);
+  //   setVerificationProgress(0);
+    
+  //   if (selectedFile) {
+  //     // Extract file details
+  //     const fileInfo = {
+  //       name: selectedFile.name,
+  //       type: selectedFile.type,
+  //       size: (selectedFile.size / 1024).toFixed(2) + ' KB',
+  //       lastModified: new Date(selectedFile.lastModified).toLocaleDateString()
+  //     };
+  //     setFileDetails(fileInfo);
+      
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       const fileContent = e.target.result;
+  //       const hash = CryptoJS.SHA256(fileContent).toString();
+  //       verifyDocumentHash(hash);
+  //     };
+  //     reader.readAsText(selectedFile);
+  //   }
+  // };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -82,7 +144,7 @@ const Home = () => {
     setErrorMessage('');
     setFileDetails(null);
     setVerificationProgress(0);
-    
+  
     if (selectedFile) {
       // Extract file details
       const fileInfo = {
@@ -92,18 +154,25 @@ const Home = () => {
         lastModified: new Date(selectedFile.lastModified).toLocaleDateString()
       };
       setFileDetails(fileInfo);
-      
+  
       const reader = new FileReader();
       reader.onload = (e) => {
-        const fileContent = e.target.result;
-        const hash = CryptoJS.SHA256(fileContent).toString();
-        verifyDocumentHash(hash);
+        const arrayBuffer = e.target.result;
+        // Convert ArrayBuffer to CryptoJS WordArray
+        const wordArray = CryptoJS.lib.WordArray.create(
+          new Uint8Array(arrayBuffer)
+        );
+        const hashHex = CryptoJS.SHA256(wordArray).toString(CryptoJS.enc.Hex);
+        console.log("SHA-256:", hashHex);
+        verifyDocumentHash(hashHex);
       };
-      reader.readAsText(selectedFile);
+      reader.readAsArrayBuffer(selectedFile);
     }
   };
-
+  
   const verifyDocumentHash = async (hash) => {
+    console.log("hhash:" +hash);
+    // alert("hash: "+ hash);
     setIsLoading(true);
     setVerificationProgress(0);
     

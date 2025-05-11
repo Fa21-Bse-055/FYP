@@ -95,6 +95,15 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
+            <Link 
+              to="/uploadCSV" 
+              className={`nav-link ${isActive('/uploadCSV') ? 'active' : ''}`} 
+              onClick={closeMenu}
+            >
+              Upload CSV
+            </Link>
+            </li>
+              <li className="nav-item">
                 <Link 
                   to="/generateDocument" 
                   className={`nav-link ${isActive('/generateDocument') ? 'active' : ''}`} 

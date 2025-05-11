@@ -124,25 +124,27 @@ const About = () => {
                 <div className="member-glow"></div>
                 <img src="/images/hammad-profile.jpg" alt="Hammad" />
               </div>
-              <h3>Hammad</h3>
-              <p>Lead Developer</p>
+              <h3>Muhammad Hammad</h3>
+              <p>Blockchain Developer</p>
               <div className="member-bio">Expert in blockchain architecture and smart contract development</div>
             </div>
             <div className="team-member">
               <div className="member-image">
                 <div className="member-glow"></div>
+                <img src="/images/ahmar-profile.jpg" alt="Hammad" />
               </div>
-              <h3>Jane Smith</h3>
-              <p>Blockchain Expert</p>
-              <div className="member-bio">Specializes in cryptographic security and distributed systems</div>
+              <h3>Ahmar Anwar</h3>
+              <p>Backend Developer</p>
+              <div className="member-bio">Specializes in Backend Technologies with 1+ year experience in node js</div>
             </div>
             <div className="team-member">
               <div className="member-image">
                 <div className="member-glow"></div>
+                <img src="/images/muqtadir-profile.jpg" alt="Hammad" />
               </div>
-              <h3>Mike Johnson</h3>
-              <p>Security Specialist</p>
-              <div className="member-bio">Focused on data protection and privacy compliance frameworks</div>
+              <h3>Muqtadir Medhi</h3>
+              <p>Research Specialist</p>
+              <div className="member-bio">Focused on research and analytics, with real time experience in research industry</div>
             </div>
           </div>
         </div>
